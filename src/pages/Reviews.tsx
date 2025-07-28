@@ -206,7 +206,7 @@ const Reviews = () => {
       <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-6">
-            Ready to Experience Serene Wellness?
+            Ready to try out our services?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Join hundreds of satisfied clients who have discovered their path to

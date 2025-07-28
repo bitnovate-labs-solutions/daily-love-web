@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-full warm-gradient"></div>
               <span className="text-xl font-serif font-semibold">
-                Serene Wellness
+                Daily Love Wellness
               </span>
             </div>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
@@ -124,7 +124,7 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center">
           <p className="text-primary-foreground/60 text-sm">
-            © 2024 Serene Wellness. All rights reserved. | Crafted with care for
+            © 2024 Daily Love Wellness. All rights reserved. | Crafted with care for
             your wellbeing.
           </p>
         </div>

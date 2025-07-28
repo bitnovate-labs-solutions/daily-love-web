@@ -29,7 +29,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full warm-gradient"></div>
             <span className="text-xl font-serif font-semibold text-primary">
-              Serene Wellness
+              Daily Love Wellness
             </span>
           </Link>
 

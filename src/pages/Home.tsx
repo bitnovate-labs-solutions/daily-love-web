@@ -62,7 +62,7 @@ const Home = () => {
           <div className="max-w-4xl mx-auto text-white">
             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
               Discover Your Path to
-              <span className="block text-wellness-warm">Serene Wellness</span>
+              <span className="block text-wellness-warm">Daily Love Wellness</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed opacity-90">
               Experience tranquility through premium IV therapy and therapeutic
@@ -94,7 +94,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Why Choose Serene Wellness?
+              Why Choose Daily Love Wellness?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               We blend ancient wisdom with modern wellness to create an
@@ -209,7 +209,7 @@ const Home = () => {
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Experience the peace and rejuvenation that our clients discover at
-              Serene Wellness.
+              Daily Love Wellness.
             </p>
           </div>
 

@@ -46,7 +46,7 @@ const About = () => {
             Our Story
           </h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto">
-            Discover the passion and purpose behind Serene Wellness
+            Discover the passion and purpose behind Daily Love Wellness
           </p>
         </div>
       </section>
@@ -61,7 +61,7 @@ const About = () => {
                   A Journey Towards Wellness
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Serene Wellness was born from a simple yet profound belief:
+                  Daily Love Wellness was born from a simple yet profound belief:
                   that true wellness should be accessible, natural, and deeply
                   restorative. Our founder's personal journey through stress and
                   burnout led to the discovery of how IV therapy and therapeutic
@@ -130,7 +130,7 @@ const About = () => {
                     Our Promise
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Every visit to Serene Wellness will leave you feeling more
+                    Every visit to Daily Love Wellness will leave you feeling more
                     balanced, restored, and connected to your natural vitality.
                     We promise an experience that honors your time and
                     investment in your well-being.
