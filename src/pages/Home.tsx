@@ -61,7 +61,7 @@ const Home = () => {
         <div className="container mx-auto px-4 z-10">
           <div className="max-w-4xl mx-auto text-white">
             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
-              Discover Your Path to
+              Welcome to
               <span className="block text-wellness-warm">Daily Love Wellness</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed opacity-90">
