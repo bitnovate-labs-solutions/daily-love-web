@@ -21,7 +21,7 @@ import {
   Scissors,
   Flame,
 } from "lucide-react";
-import ivTherapyImage from "@/assets/iv-therapy.png";
+import ivTherapyImage from "@/assets/iv_therapy1.jpg";
 import essentialOilsImage from "@/assets/essential-oils.jpg";
 
 const Services = () => {
@@ -283,7 +283,7 @@ const Services = () => {
                 certified professionals in comfortable, private spaces designed
                 for your complete relaxation and well-being.
               </p>
-              <div className="flex items-center space-x-4">
+              {/* <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-5 w-5 text-wellness-sage" />
                   <span className="text-muted-foreground">30-75 minutes</span>
@@ -294,7 +294,7 @@ const Services = () => {
                     Certified professionals
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div>
               <img
