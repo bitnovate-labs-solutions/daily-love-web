@@ -11,7 +11,7 @@ const Navigation = () => {
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
-    { href: "/reviews", label: "Reviews" },
+    // { href: "/reviews", label: "Reviews" },  // CODE FOR FUTURE USE =========================================
     { href: "/contact", label: "Contact" },
   ];
 
@@ -22,15 +22,16 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-soft">
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full warm-gradient"></div>
-            <span className="text-xl font-serif font-semibold text-primary">
-              Daily Love Wellness
-            </span>
+          <Link to="/" className="flex items-center">
+            <img
+              src="src/assets/dailylove_logo.png"
+              alt="Daily Love Logo"
+              className="h-[80px]"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -51,6 +52,12 @@ const Navigation = () => {
             <Button
               variant="default"
               className="bg-wellness-sage hover:bg-wellness-sage/90"
+              onClick={() => {
+                const phoneNumber = "+6013-959 9476";
+                const message = "Hi! I'd like to book a wellness session. Can you help me schedule an appointment?";
+                const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+              }}
             >
               Book Session
             </Button>
@@ -91,7 +98,13 @@ const Navigation = () => {
               <Button
                 variant="default"
                 className="bg-wellness-sage hover:bg-wellness-sage/90 w-fit mt-2"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  const phoneNumber = "+6013-959 9476";
+                  const message = "Hi! I'd like to book a wellness session. Can you help me schedule an appointment?";
+                  const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
               >
                 Book Session
               </Button>

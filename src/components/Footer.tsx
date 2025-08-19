@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-gray-800 text-primary-foreground">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -21,7 +21,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="md:col-span-1 md:justify-self-center">
             <h3 className="font-serif font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
@@ -40,14 +40,14 @@ const Footer = () => {
                   Services
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/reviews"
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-smooth text-sm"
                 >
                   Reviews
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/contact"
@@ -60,7 +60,7 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div>
+          <div className="md:col-span-1 md:justify-self-center">
             <h3 className="font-serif font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               <li className="text-primary-foreground/80 text-sm">
@@ -79,25 +79,26 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div className="md:col-span-1 md:justify-self-center">
             <h3 className="font-serif font-semibold mb-4">Contact</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-primary-foreground/60" />
                 <span className="text-primary-foreground/80 text-sm">
-                  Plaza Mont Kiara, Kuala Lumpur
+                  12, Jalan SS 21/39, Damansara Utama, 47400 Petaling Jaya,
+                  Selangor
                 </span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-primary-foreground/60" />
                 <span className="text-primary-foreground/80 text-sm">
-                  +60 3-2166 8888
+                  +6013-959 9476
                 </span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-primary-foreground/60" />
                 <span className="text-primary-foreground/80 text-sm">
-                  hello@serenewellness.com
+                  dailylovewellness@gmail.com
                 </span>
               </div>
             </div>
@@ -105,14 +106,14 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex items-center space-x-3 mt-4">
               <a
-                href="#"
+                href="https://www.instagram.com/dailylovewellness/"
                 className="text-primary-foreground/60 hover:text-primary-foreground transition-smooth"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61562437705616"
                 className="text-primary-foreground/60 hover:text-primary-foreground transition-smooth"
                 aria-label="Facebook"
               >
@@ -124,8 +125,8 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center">
           <p className="text-primary-foreground/60 text-sm">
-            © 2024 Daily Love Wellness. All rights reserved. | Crafted with care for
-            your wellbeing.
+            © 2024 Daily Love Wellness. All rights reserved. | Crafted with care
+            by Bitnovate Labs Solutions
           </p>
         </div>
       </div>

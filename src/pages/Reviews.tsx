@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote } from "lucide-react";
 import wellnessSpaceImage from "@/assets/wellness-space.png";
+import GoogleReviews from "@/components/GoogleReviews";
 
 const Reviews = () => {
   const reviews = [
@@ -147,58 +148,7 @@ const Reviews = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review, index) => (
-              <Card
-                key={index}
-                className="shadow-soft wellness-glow bg-card border-0 h-full"
-              >
-                <CardContent className="p-6 h-full flex flex-col">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <h3 className="font-semibold text-primary">
-                          {review.name}
-                        </h3>
-                        {review.verified && (
-                          <span className="text-xs bg-wellness-sage/20 text-wellness-sage px-2 py-1 rounded-full">
-                            Verified
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        {review.date}
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="h-4 w-4 fill-wellness-sage text-wellness-sage"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Service */}
-                  <div className="mb-4">
-                    <span className="text-sm bg-secondary text-secondary-foreground px-3 py-1 rounded-full">
-                      {review.service}
-                    </span>
-                  </div>
-
-                  {/* Review Text */}
-                  <div className="flex-1 mb-4">
-                    <Quote className="h-5 w-5 text-wellness-sage/40 mb-2" />
-                    <p className="text-muted-foreground leading-relaxed text-sm italic">
-                      "{review.review}"
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <GoogleReviews maxReviews={9} />
         </div>
       </section>
 
@@ -214,10 +164,44 @@ const Reviews = () => {
             difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-wellness-sage hover:bg-wellness-sage/90 text-wellness-sage-foreground font-semibold px-8 py-4 rounded-full transition-smooth">
+            <button 
+              className="bg-wellness-sage hover:bg-wellness-sage/90 text-wellness-sage-foreground font-semibold px-8 py-4 rounded-full transition-smooth"
+              onClick={() => {
+                const phoneNumber = "+6013-959 9476";
+                const message = `Hi! I'd like to book my first wellness session at Daily Love Wellness.
+
+I'm interested in:
+• IV Drip Therapy options
+• Essential oils consultation
+• Wellness packages
+• Available appointment times
+
+Can you help me get started?`;
+                
+                const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+              }}
+            >
               Book Your First Session
             </button>
-            <button className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-4 rounded-full transition-smooth">
+            <button 
+              className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-4 rounded-full transition-smooth"
+              onClick={() => {
+                const phoneNumber = "+6013-959 9476";
+                const message = `Hi! I'd like to schedule a consultation at Daily Love Wellness.
+
+I'm looking for:
+• Wellness consultation
+• Personalized treatment plan
+• Essential oil recommendations
+• Understanding of available services
+
+Can you help me schedule a consultation?`;
+                
+                const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+              }}
+            >
               Schedule Consultation
             </button>
           </div>
@@ -228,7 +212,7 @@ const Reviews = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
-            <Card className="shadow-soft bg-card border-0">
+            <Card className="shadow-lg bg-card border-0">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-serif font-bold text-primary mb-4">
