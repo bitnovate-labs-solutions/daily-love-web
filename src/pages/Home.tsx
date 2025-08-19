@@ -71,7 +71,7 @@ const Home = () => {
             </h1> */}
 
             <img
-              src="src/assets/dailylove_banner.png"
+              src="/dailylove_banner.png"
               alt="Daily Love Logo"
               className="h-auto w-full max-w-2xl mx-auto px-4"
             />
