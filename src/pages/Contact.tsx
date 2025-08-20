@@ -131,13 +131,13 @@ const Contact = () => {
       </section>
 
       {/* Contact Information Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-wellness-sage/20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {contactInfo.map((info, index) => (
               <Card
                 key={index}
-                className="shadow-lg wellness-glow bg-card border-0 text-center"
+                className="shadow-lg wellness-glow bg-white/80 backdrop-blur-sm border-0 text-center"
               >
                 <CardContent className="p-6">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-wellness-sage/20 text-wellness-sage mb-4">

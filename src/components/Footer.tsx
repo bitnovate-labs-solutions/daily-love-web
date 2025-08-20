@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
 
 const Footer = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+
   return (
     <footer className="bg-gray-800 text-primary-foreground">
       <div className="container mx-auto px-4 py-12">
@@ -125,8 +128,8 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center">
           <p className="text-primary-foreground/60 text-sm">
-            © 2024 Daily Love Wellness. All rights reserved. | Crafted with care
-            by Bitnovate Labs Solutions
+            © {year} Daily Love Wellness. All rights reserved. | Crafted with
+            care by Bitnovate Labs Solutions
           </p>
         </div>
       </div>

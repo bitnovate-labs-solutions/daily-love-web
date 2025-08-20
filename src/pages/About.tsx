@@ -113,7 +113,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
+              <div className="space-y-6 text-center lg:text-left">
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">
                   A Journey Towards Wellness
                 </h2>
@@ -267,7 +267,7 @@ const About = () => {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20">
+      <section className="py-20 bg-wellness-sage/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-8">
@@ -281,7 +281,7 @@ const About = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
-              <Card className="shadow-lg bg-wellness-warm/10 border-0">
+              <Card className="shadow-lg bg-white/80 backdrop-blur-sm border-0">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-serif font-semibold text-primary mb-4">
                     Our Vision
@@ -295,7 +295,7 @@ const About = () => {
                 </CardContent>
               </Card>
 
-              <Card className="shadow-lg bg-wellness-sage/10 border-0">
+              <Card className="shadow-lg bg-white/80 backdrop-blur-sm border-0">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-serif font-semibold text-primary mb-4">
                     Our Promise

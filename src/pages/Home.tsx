@@ -144,7 +144,7 @@ const Home = () => {
       </section>
 
       {/* Services Preview */}
-      <section className="py-20">
+      <section className="py-20 bg-wellness-sage/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -201,8 +201,11 @@ const Home = () => {
                   out.
                 </li>
               </ul>
-              <Button className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground">
-                Learn More About IV Therapy
+              <Button 
+                asChild
+                className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground"
+              >
+                <Link to="/services">Learn More About IV Therapy</Link>
               </Button>
             </div>
           </div>
@@ -225,8 +228,11 @@ const Home = () => {
                 <li>• Focus & Mental Clarity</li>
                 <li>• Natural Immunity Boost</li>
               </ul>
-              <Button className="bg-wellness-warm hover:bg-wellness-warm/90 text-wellness-warm-foreground">
-                Shop Essential Oils
+              <Button 
+                asChild
+                className="bg-wellness-warm hover:bg-wellness-warm/90 text-wellness-warm-foreground"
+              >
+                <Link to="/services">Shop Essential Oils</Link>
               </Button>
             </div>
             <div className="space-y-6">
@@ -242,7 +248,7 @@ const Home = () => {
 
       {/* CODE FOR FUTURE USE (WAITING TO OBTAIN API KEY FROM CLIENT TO INTEGRATE GOOGLE REVIEWS ================================) */}
       {/* Testimonials */}
-      {/* <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
+      <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -277,13 +283,13 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* CTA Section */}
       <section
         className="py-20 relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${wellnessSpaceImage})`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(${wellnessSpaceImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

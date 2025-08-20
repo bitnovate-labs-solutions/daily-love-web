@@ -275,7 +275,7 @@ const Services = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-            <div className="space-y-6">
+            <div className="space-y-6 text-center lg:text-left">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">
                 IV Drip Therapy
               </h2>
@@ -285,7 +285,7 @@ const Services = () => {
                 certified professionals in comfortable, private spaces designed
                 for your complete relaxation and well-being.
               </p>
-              <div className="flex justify-start">
+              <div className="flex justify-center lg:justify-start">
                 <Button
                   className="w-full sm:w-auto bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground font-semibold px-6 py-3"
                   onClick={() => {
@@ -319,11 +319,11 @@ const Services = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
             {ivDrips.map((drip, index) => (
               <Card
                 key={index}
-                className="shadow-lg wellness-glow bg-card border-0 relative flex flex-col"
+                className="shadow-lg wellness-glow bg-card border border-wellness-sage/20 hover:border-wellness-sage/40 transition-all duration-300 relative flex flex-col"
               >
                 {drip.popular && (
                   <Badge className="absolute -top-2 left-6 bg-wellness-sage text-wellness-sage-foreground">
@@ -464,9 +464,9 @@ Can you help me with availability and booking?`;
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 md:gap-8">
             {essentialOils.map((category, index) => (
-              <Card key={index} className="shadow-lg bg-card border-0">
+              <Card key={index} className="shadow-lg bg-card border border-wellness-warm/20 hover:border-wellness-warm/40 transition-all duration-300">
                 <CardHeader>
                   <div className="flex items-center space-x-3 mb-4">
                     <div className="p-2 rounded-full bg-wellness-warm/20 text-wellness-warm">
