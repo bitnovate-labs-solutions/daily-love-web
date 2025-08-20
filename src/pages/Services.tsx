@@ -256,17 +256,19 @@ const Services = () => {
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
+      <section className="relative h-96 flex items-center justify-center bg-gradient-to-br from-wellness-warm via-wellness-sage/90 to-primary/70 text-primary-foreground">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary-foreground mb-6">
             Our Premium Services
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed">
             Discover our carefully curated wellness experiences designed to
             restore balance, enhance vitality, and nurture your natural
             well-being in our serene environment.
           </p>
         </div>
+        {/* Subtle overlay for depth and text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent"></div>
       </section>
 
       {/* IV Drip Therapy Section */}
@@ -283,16 +285,28 @@ const Services = () => {
                 certified professionals in comfortable, private spaces designed
                 for your complete relaxation and well-being.
               </p>
+              <div className="flex justify-start">
+                <Button
+                  className="w-full sm:w-auto bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground font-semibold px-6 py-3"
+                  onClick={() => {
+                    // You can replace this URL with your actual Chinese PDF brochure
+                    const pdfUrl = "/chinese-iv-therapy-brochure.pdf";
+                    window.open(pdfUrl, "_blank");
+                  }}
+                >
+                  📄 中文手册 / Chinese Brochure
+                </Button>
+              </div>
               {/* <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-5 w-5 text-wellness-sage" />
-                  <span className="text-muted-foreground">30-75 minutes</span>
+                  <span className="text-sm text-muted-foreground">30-75 minutes</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Star className="h-5 w-5 text-wellness-sage" />
-                  <span className="text-muted-foreground">
+                  <Star className="h-5 w-5 text-sm text-wellness-sage" />
+                  <span className="text-sm text-muted-foreground">
                     Certified professionals
-                  </span>
+  </span>
                 </div>
               </div> */}
             </div>
@@ -309,7 +323,7 @@ const Services = () => {
             {ivDrips.map((drip, index) => (
               <Card
                 key={index}
-                className="shadow-lg wellness-glow bg-card border-0 relative"
+                className="shadow-lg wellness-glow bg-card border-0 relative flex flex-col"
               >
                 {drip.popular && (
                   <Badge className="absolute -top-2 left-6 bg-wellness-sage text-wellness-sage-foreground">
@@ -367,25 +381,27 @@ const Services = () => {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {drip.description}
-                  </p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-primary">Benefits:</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {drip.benefits.map((benefit, i) => (
-                        <div key={i} className="flex items-center space-x-2">
-                          <div className="w-2 h-2 rounded-full bg-wellness-sage"></div>
-                          <span className="text-sm text-muted-foreground">
-                            {benefit}
-                          </span>
-                        </div>
-                      ))}
+                <CardContent className="space-y-4 flex-1 flex flex-col">
+                  <div className="flex-1 space-y-4">
+                    <p className="text-muted-foreground leading-relaxed">
+                      {drip.description}
+                    </p>
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-primary">Benefits:</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {drip.benefits.map((benefit, i) => (
+                          <div key={i} className="flex items-center space-x-2">
+                            <div className="w-2 h-2 rounded-full bg-wellness-sage"></div>
+                            <span className="text-sm text-muted-foreground">
+                              {benefit}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <Button
-                    className="w-full bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground"
+                    className="w-full bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground mt-auto"
                     onClick={() => {
                       const phoneNumber = "+6013-959 9476";
                       const message = `Hi! I'd like to book the ${drip.name} treatment at Daily Love Wellness.
