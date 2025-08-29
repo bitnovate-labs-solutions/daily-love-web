@@ -56,6 +56,8 @@ const Home = () => {
               src="/dailylove_banner.png"
               alt="Daily Love Logo"
               className="h-auto w-full max-w-2xl mx-auto px-4"
+              loading="eager"
+              fetchPriority="high"
             />
 
             <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed opacity-80">
@@ -148,6 +150,7 @@ const Home = () => {
                 src={ivTherapyImage}
                 alt="IV Drip Therapy"
                 className="w-full aspect-square object-cover rounded-2xl shadow-lg"
+                loading="lazy"
               />
             </div>
             <div className="space-y-6">
@@ -229,6 +232,7 @@ const Home = () => {
                 src={essentialOilsImage}
                 alt="Essential Oils"
                 className="w-full aspect-square object-cover rounded-2xl shadow-lg"
+                loading="lazy"
               />
             </div>
           </div>
@@ -240,6 +244,7 @@ const Home = () => {
                 src={CASBooster}
                 alt="CAS Water Booster"
                 className="w-full aspect-square object-cover rounded-2xl shadow-lg"
+                loading="lazy"
               />
             </div>
             <div className="space-y-6">

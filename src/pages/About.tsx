@@ -193,6 +193,7 @@ const About = () => {
                         src={image.src}
                         alt={image.alt}
                         className="w-full h-80 md:h-96 object-cover shadow-lg"
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                         <div className="p-8 text-white">
@@ -456,6 +457,7 @@ const About = () => {
               src={selectedImage}
               alt="Full size view"
               className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
+              loading="eager"
             />
             <button
               onClick={() => setSelectedImage(null)}

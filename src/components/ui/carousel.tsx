@@ -104,6 +104,7 @@ const Carousel: React.FC<CarouselProps> = ({
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                 />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
@@ -228,6 +229,7 @@ const Carousel: React.FC<CarouselProps> = ({
               src={images[selectedImage].src}
               alt={images[selectedImage].alt}
               className="w-full h-full object-contain rounded-lg"
+              loading="eager"
             />
             
 

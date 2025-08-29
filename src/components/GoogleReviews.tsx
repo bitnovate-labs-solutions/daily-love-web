@@ -155,6 +155,7 @@ const GoogleReviews = ({
                       src={review.profile_photo_url}
                       alt={review.author_name}
                       className="w-8 h-8 rounded-full"
+                      loading="lazy"
                     />
                   )}
                   <h3 className="font-semibold text-primary">

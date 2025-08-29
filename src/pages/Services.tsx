@@ -276,6 +276,7 @@ const Services = () => {
                 src={ivTherapyImage}
                 alt="IV Drip Therapy"
                 className="w-full h-80 object-cover rounded-2xl shadow-lg"
+                loading="lazy"
               />
             </div>
           </div>

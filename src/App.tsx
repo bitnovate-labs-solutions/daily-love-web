@@ -14,6 +14,7 @@ import Reviews from "./pages/Reviews";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+
 // ScrollToTop component
 import { useEffect } from "react";
 function ScrollToTop() {

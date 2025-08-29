@@ -32,6 +32,8 @@ const Navigation = () => {
               src="/dailylove_logo.png"
               alt="Daily Love Logo"
               className="h-[80px]"
+              loading="eager"
+              fetchPriority="high"
             />
           </Link>
 

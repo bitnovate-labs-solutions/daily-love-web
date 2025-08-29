@@ -25,6 +25,7 @@ const Footer = () => {
                 src="/dailylove_footer.png"
                 alt="Daily Love Logo"
                 className="h-auto w-4/5 sm:w-4/5 max-w-2xl"
+                loading="lazy"
               />
             </div>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
@@ -174,6 +175,7 @@ const Footer = () => {
               src="/xiaohongshu.svg"
               alt="Xiao Hong Shu"
               className="h-12 w-12 filter brightness-0 invert opacity-60 hover:opacity-100 transition-opacity"
+              loading="lazy"
             />
           </a>
         </div>

@@ -155,6 +155,7 @@ const Products = () => {
                 src={essentialOilsImage}
                 alt="Essential Oils"
                 className="w-full h-86 object-cover rounded-2xl shadow-lg"
+                loading="lazy"
               />
             </div>
             <div className="space-y-6">
@@ -195,6 +196,7 @@ const Products = () => {
                         src={category.image}
                         alt={category.category}
                         className="w-full aspect-square object-cover rounded-lg mb-3"
+                        loading="lazy"
                         onError={(e) => {
                           // Fallback to placeholder if image fails to load
                           const target = e.target as HTMLImageElement;
@@ -285,6 +287,7 @@ Can you help me with availability and pricing for these oils?`;
                 src={casImage}
                 alt="C.A.S Premium Skincare Collection"
                 className="w-full sm:aspect-[5/2] object-cover rounded-2xl shadow-lg"
+                loading="lazy"
                 onError={(e) => {
                   // Fallback to placeholder if image fails to load
                   const target = e.target as HTMLImageElement;
