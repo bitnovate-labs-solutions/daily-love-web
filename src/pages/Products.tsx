@@ -197,8 +197,12 @@ const Products = () => {
                         className="w-full aspect-square object-cover rounded-lg mb-3"
                         onError={(e) => {
                           // Fallback to placeholder if image fails to load
-                          e.target.style.display = "none";
-                          e.target.nextSibling.style.display = "flex";
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                          const nextSibling = target.nextSibling as HTMLElement;
+                          if (nextSibling) {
+                            nextSibling.style.display = "flex";
+                          }
                         }}
                       />
                     ) : null}
@@ -283,8 +287,12 @@ Can you help me with availability and pricing for these oils?`;
                 className="w-full sm:aspect-[5/2] object-cover rounded-2xl shadow-lg"
                 onError={(e) => {
                   // Fallback to placeholder if image fails to load
-                  e.target.style.display = "none";
-                  e.target.nextSibling.style.display = "flex";
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = "none";
+                  const nextSibling = target.nextSibling as HTMLElement;
+                  if (nextSibling) {
+                    nextSibling.style.display = "flex";
+                  }
                 }}
               />
               {/* Fallback placeholder */}
