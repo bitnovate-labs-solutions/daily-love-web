@@ -86,7 +86,7 @@ const Products = () => {
     {
       name: "C.A.S Water Booster",
       icon: <Droplets className="h-6 w-6" />,
-      price: "RM 180",
+      price: "RM 288",
       description:
         "Plant Extract with Hyaluronic Acid Salt - Intensive hydration serum for all skin types.",
       size: "30ml",
