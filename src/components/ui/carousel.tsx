@@ -1,260 +1,243 @@
-import * as React from "react"
-import useEmblaCarousel, {
-  type UseEmblaCarouselType,
-} from "embla-carousel-react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Play, Pause, X } from "lucide-react";
+import { Button } from "./button";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-
-type CarouselApi = UseEmblaCarouselType[1]
-type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
-type CarouselOptions = UseCarouselParameters[0]
-type CarouselPlugin = UseCarouselParameters[1]
-
-type CarouselProps = {
-  opts?: CarouselOptions
-  plugins?: CarouselPlugin
-  orientation?: "horizontal" | "vertical"
-  setApi?: (api: CarouselApi) => void
+interface CarouselProps {
+  images: {
+    src: string;
+    alt: string;
+    title?: string;
+    description?: string;
+  }[];
+  autoPlay?: boolean;
+  interval?: number;
+  showArrows?: boolean;
+  showDots?: boolean;
+  showPlayPause?: boolean;
+  className?: string;
 }
 
-type CarouselContextProps = {
-  carouselRef: ReturnType<typeof useEmblaCarousel>[0]
-  api: ReturnType<typeof useEmblaCarousel>[1]
-  scrollPrev: () => void
-  scrollNext: () => void
-  canScrollPrev: boolean
-  canScrollNext: boolean
-} & CarouselProps
+const Carousel: React.FC<CarouselProps> = ({
+  images,
+  autoPlay = true,
+  interval = 5000,
+  showArrows = true,
+  showDots = true,
+  showPlayPause = true,
+  className = "",
+}) => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+  // Calculate how many pages we need (1 image per page on mobile, 3 on desktop)
+  const imagesPerPage = window.innerWidth < 768 ? 1 : 3;
+  const totalPages = Math.ceil(images.length / imagesPerPage);
 
-function useCarousel() {
-  const context = React.useContext(CarouselContext)
+  useEffect(() => {
+    if (!isPlaying) return;
 
-  if (!context) {
-    throw new Error("useCarousel must be used within a <Carousel />")
-  }
+    const timer = setInterval(() => {
+      setCurrentPage((prevPage) => (prevPage + 1) % totalPages);
+    }, interval);
 
-  return context
-}
+    return () => clearInterval(timer);
+  }, [isPlaying, interval, totalPages]);
 
-const Carousel = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & CarouselProps
->(
-  (
-    {
-      orientation = "horizontal",
-      opts,
-      setApi,
-      plugins,
-      className,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const [carouselRef, api] = useEmblaCarousel(
-      {
-        ...opts,
-        axis: orientation === "horizontal" ? "x" : "y",
-      },
-      plugins
-    )
-    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-    const [canScrollNext, setCanScrollNext] = React.useState(false)
+  const goToPage = (pageIndex: number) => {
+    setCurrentPage(pageIndex);
+  };
 
-    const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) {
-        return
-      }
+  const goToPrevious = () => {
+    setCurrentPage((prevPage) => (prevPage - 1 + totalPages) % totalPages);
+  };
 
-      setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
-    }, [])
+  const goToNext = () => {
+    setCurrentPage((prevPage) => (prevPage + 1) % totalPages);
+  };
 
-    const scrollPrev = React.useCallback(() => {
-      api?.scrollPrev()
-    }, [api])
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
 
-    const scrollNext = React.useCallback(() => {
-      api?.scrollNext()
-    }, [api])
+  const openImagePreview = (imageIndex: number) => {
+    setSelectedImage(imageIndex);
+  };
 
-    const handleKeyDown = React.useCallback(
-      (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === "ArrowLeft") {
-          event.preventDefault()
-          scrollPrev()
-        } else if (event.key === "ArrowRight") {
-          event.preventDefault()
-          scrollNext()
-        }
-      },
-      [scrollPrev, scrollNext]
-    )
+  const closeImagePreview = () => {
+    setSelectedImage(null);
+  };
 
-    React.useEffect(() => {
-      if (!api || !setApi) {
-        return
-      }
+  const goToNextImage = () => {
+    if (selectedImage !== null) {
+      setSelectedImage((selectedImage + 1) % images.length);
+    }
+  };
 
-      setApi(api)
-    }, [api, setApi])
+  const goToPreviousImage = () => {
+    if (selectedImage !== null) {
+      setSelectedImage((selectedImage - 1 + images.length) % images.length);
+    }
+  };
 
-    React.useEffect(() => {
-      if (!api) {
-        return
-      }
+  if (!images || images.length === 0) return null;
 
-      onSelect(api)
-      api.on("reInit", onSelect)
-      api.on("select", onSelect)
+  // Get current page images
+  const startIndex = currentPage * imagesPerPage;
+  const endIndex = startIndex + imagesPerPage;
+  const currentImages = images.slice(startIndex, endIndex);
 
-      return () => {
-        api?.off("select", onSelect)
-      }
-    }, [api, onSelect])
-
-    return (
-      <CarouselContext.Provider
-        value={{
-          carouselRef,
-          api: api,
-          opts,
-          orientation:
-            orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-          scrollPrev,
-          scrollNext,
-          canScrollPrev,
-          canScrollNext,
-        }}
-      >
-        <div
-          ref={ref}
-          onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
-          role="region"
-          aria-roledescription="carousel"
-          {...props}
-        >
-          {children}
+  return (
+    <>
+      <div className={`relative w-full ${className}`}>
+        {/* Main Grid Container */}
+        <div className="relative w-full overflow-hidden rounded-lg">
+          {/* Responsive Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-2">
+            {currentImages.map((image, index) => (
+              <div
+                key={startIndex + index}
+                className="relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                onClick={() => openImagePreview(startIndex + index)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
+                    <div className="bg-black/50 px-3 py-2 rounded-lg">
+                      <p className="text-sm font-medium">Click to view</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            {/* Fill empty slots with placeholder if needed */}
+            {currentImages.length < imagesPerPage && 
+              Array.from({ length: imagesPerPage - currentImages.length }).map((_, index) => (
+                <div
+                  key={`empty-${index}`}
+                  className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center"
+                >
+                  <span className="text-gray-400 text-sm">No Image</span>
+                </div>
+              ))
+            }
+          </div>
         </div>
-      </CarouselContext.Provider>
-    )
-  }
-)
-Carousel.displayName = "Carousel"
 
-const CarouselContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  const { carouselRef, orientation } = useCarousel()
-
-  return (
-    <div ref={carouselRef} className="overflow-hidden">
-      <div
-        ref={ref}
-        className={cn(
-          "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className
+        {/* Navigation Arrows */}
+        {showArrows && totalPages > 1 && (
+          <>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goToPrevious}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 border-white/20 shadow-lg backdrop-blur-sm z-10"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goToNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 border-white/20 shadow-lg backdrop-blur-sm z-10"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </>
         )}
-        {...props}
-      />
-    </div>
-  )
-})
-CarouselContent.displayName = "CarouselContent"
 
-const CarouselItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  const { orientation } = useCarousel()
+        {/* Play/Pause Button - Hidden */}
+        {/* {showPlayPause && totalPages > 1 && (
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={togglePlayPause}
+            className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-800 border-white/20 shadow-lg backdrop-blur-sm"
+          >
+            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+          </Button>
+        )} */}
 
-  return (
-    <div
-      ref={ref}
-      role="group"
-      aria-roledescription="slide"
-      className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
-        className
+        {/* Page Dots Indicator - Hidden on Mobile */}
+        {showDots && totalPages > 1 && (
+          <div className="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 space-x-2">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToPage(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentPage
+                    ? "bg-white scale-110"
+                    : "bg-white/50 hover:bg-white/80"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Page Counter */}
+        <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm">
+          Page {currentPage + 1} / {totalPages}
+        </div>
+      </div>
+
+      {/* Image Preview Modal */}
+      {selectedImage !== null && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+          {/* Close Button */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={closeImagePreview}
+            className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-800 border-white/20 shadow-lg backdrop-blur-sm z-10"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+
+          {/* Navigation Arrows */}
+          {images.length > 1 && (
+            <>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToPreviousImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 border-white/20 shadow-lg backdrop-blur-sm z-10"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToNextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 border-white/20 shadow-lg backdrop-blur-sm z-10"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
+            </>
+          )}
+
+          {/* Image */}
+          <div className="relative w-full h-full max-w-7xl">
+            <img
+              src={images[selectedImage].src}
+              alt={images[selectedImage].alt}
+              className="w-full h-full object-contain rounded-lg"
+            />
+            
+
+          </div>
+
+
+        </div>
       )}
-      {...props}
-    />
-  )
-})
-CarouselItem.displayName = "CarouselItem"
+    </>
+  );
+};
 
-const CarouselPrevious = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
-
-  return (
-    <Button
-      ref={ref}
-      variant={variant}
-      size={size}
-      className={cn(
-        "absolute  h-8 w-8 rounded-full",
-        orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
-        className
-      )}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
-      {...props}
-    >
-      <ArrowLeft className="h-4 w-4" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
-  )
-})
-CarouselPrevious.displayName = "CarouselPrevious"
-
-const CarouselNext = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
-
-  return (
-    <Button
-      ref={ref}
-      variant={variant}
-      size={size}
-      className={cn(
-        "absolute h-8 w-8 rounded-full",
-        orientation === "horizontal"
-          ? "-right-12 top-1/2 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
-        className
-      )}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
-      {...props}
-    >
-      <ArrowRight className="h-4 w-4" />
-      <span className="sr-only">Next slide</span>
-    </Button>
-  )
-})
-CarouselNext.displayName = "CarouselNext"
-
-export {
-  type CarouselApi,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-}
+export default Carousel;

@@ -11,217 +11,238 @@ const PORT = process.env.PORT || 3003;
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://yourdomain.com'] // Replace with your actual domain
-    : ['http://localhost:8081', 'http://localhost:3000', 'http://localhost:3003'],
+  origin: [
+    'http://localhost:8080',
+    'http://localhost:3003',
+    'https://dailylovewellness.com'
+  ],
   credentials: true
 }));
-
 app.use(express.json());
 
-// Google Places API endpoint
-app.get('/api/google-reviews', async (req, res) => {
+// Review caching system
+let cachedReviews = null;
+let lastFetchTime = null;
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+// Review caching functions
+const isCacheValid = () => {
+  if (!cachedReviews || !lastFetchTime) return false;
+  
+  const now = Date.now();
+  const timeSinceLastFetch = now - lastFetchTime;
+  
+  return timeSinceLastFetch < CACHE_DURATION;
+};
+
+const updateCache = (reviews) => {
+  cachedReviews = reviews;
+  lastFetchTime = Date.now();
+  console.log('Reviews cache updated at:', new Date(lastFetchTime).toLocaleString());
+  console.log('Next fetch in 24 hours');
+};
+
+const getCachedReviews = () => {
+  if (!isCacheValid()) return null;
+  
+  const timeUntilExpiry = CACHE_DURATION - (Date.now() - lastFetchTime);
+  const hoursUntilExpiry = Math.round(timeUntilExpiry / (60 * 60 * 1000));
+  
+  console.log(`Returning cached reviews (expires in ${hoursUntilExpiry} hours)`);
+  return {
+    ...cachedReviews,
+    cacheInfo: {
+      cached: true,
+      lastFetched: new Date(lastFetchTime).toISOString(),
+      expiresIn: `${hoursUntilExpiry} hours`,
+      source: 'Cache (fetched once per day)'
+    }
+  };
+};
+
+// Google Places API endpoint (Primary - Recommended for Reviews with Caching)
+app.get('/api/google-reviews/places', async (req, res) => {
   try {
-    const { placeId, maxResults = 20 } = req.query;
+    const { placeId, maxResults = 20, forceRefresh = false } = req.query;
     
     if (!placeId) {
       return res.status(400).json({ 
-        error: 'Place ID is required' 
+        error: 'Place ID is required. Use your Google Business Place ID.' 
       });
+    }
+
+    // Check cache first (unless force refresh is requested)
+    if (!forceRefresh) {
+      const cachedData = getCachedReviews();
+      if (cachedData) {
+        return res.json({
+          ...cachedData,
+          message: 'Reviews loaded from cache (fetched once per day)',
+          note: 'Use ?forceRefresh=true to fetch fresh data'
+        });
+      }
     }
 
     // Check if we have an API key
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
     if (!apiKey) {
-      console.warn('Google Places API key not found. Using mock data.');
-      return res.json({ 
-        reviews: getMockReviews(),
-        message: 'Using mock data - API key not configured'
+      return res.status(400).json({ 
+        error: 'Google Places API key not configured',
+        message: 'This is the recommended way to fetch reviews. Please add GOOGLE_PLACES_API_KEY to your .env file.',
+        setup: {
+          step1: 'Go to Google Cloud Console',
+          step2: 'Enable Google Places API',
+          step3: 'Create API key',
+          step4: 'Add to .env file: GOOGLE_PLACES_API_KEY=your_key_here'
+        }
       });
     }
 
+    console.log('Fetching fresh reviews from Google Places API...');
+
     // Make request to Google Places API
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`;
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total,name,formatted_address&key=${apiKey}`;
     
     const response = await fetch(url);
     const data = await response.json();
 
     if (data.status !== 'OK') {
-      console.error('Google Places API error:', data.error_message || data.status);
-      
-      // Fallback to mock data if API fails
-      return res.json({ 
-        reviews: getMockReviews().slice(0, maxResults),
-        message: 'API error - using mock data as fallback',
-        error: data.error_message || data.status
+      return res.status(400).json({ 
+        error: 'Failed to fetch reviews from Google Places API',
+        details: data.error_message || data.status,
+        message: 'Please verify your Place ID and API key are correct.'
       });
     }
 
     const reviews = data.result.reviews || [];
     const limitedReviews = reviews.slice(0, maxResults);
 
-    res.json({ 
+    const responseData = {
       reviews: limitedReviews,
       total: reviews.length,
-      requested: maxResults
-    });
+      requested: maxResults,
+      placeRating: data.result.rating,
+      totalRatings: data.result.user_ratings_total,
+      placeName: data.result.name,
+      placeAddress: data.result.formatted_address,
+      source: 'Google Places API (Recommended)',
+      message: 'Reviews fetched successfully and cached for 24 hours',
+      cacheInfo: {
+        cached: false,
+        lastFetched: new Date().toISOString(),
+        expiresIn: '24 hours',
+        source: 'Fresh from Google API'
+      }
+    };
+
+    // Update cache with new data
+    updateCache(responseData);
+
+    res.json(responseData);
 
   } catch (error) {
-    console.error('Server error:', error);
+    console.error('Places API error:', error);
     
-    // Fallback to mock data on server error
-    res.json({ 
-      reviews: getMockReviews().slice(0, req.query.maxResults || 20),
-      message: 'Server error - using mock data as fallback',
-      error: error.message
+    // If we have cached data, return it as fallback
+    const cachedData = getCachedReviews();
+    if (cachedData) {
+      console.log('API error - returning cached data as fallback');
+      return res.json({
+        ...cachedData,
+        message: 'Reviews loaded from cache due to API error',
+        error: error.message,
+        note: 'This is cached data from previous successful fetch'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Failed to fetch reviews from Google Places API',
+      details: error.message 
     });
   }
 });
 
-// Place details endpoint
-app.get('/api/google-reviews/place-details', async (req, res) => {
+// Cache management endpoint
+app.get('/api/google-reviews/cache-status', (req, res) => {
+  const cacheStatus = {
+    hasCachedData: !!cachedReviews,
+    lastFetchTime: lastFetchTime ? new Date(lastFetchTime).toISOString() : null,
+    isCacheValid: isCacheValid(),
+    cacheDuration: CACHE_DURATION / (60 * 60 * 1000), // hours
+    timeUntilExpiry: lastFetchTime ? Math.max(0, CACHE_DURATION - (Date.now() - lastFetchTime)) / (60 * 60 * 1000) : 0,
+    cachedReviewsCount: cachedReviews ? cachedReviews.reviews?.length || 0 : 0,
+    message: isCacheValid() 
+      ? `Cache is valid. Reviews cached for ${Math.round((CACHE_DURATION - (Date.now() - lastFetchTime)) / (60 * 60 * 1000))} more hours.`
+      : 'Cache is expired or empty. Next request will fetch fresh data.'
+  };
+  
+  res.json(cacheStatus);
+});
+
+// Manual cache refresh endpoint
+app.post('/api/google-reviews/refresh-cache', async (req, res) => {
   try {
-    const { placeId } = req.query;
+    const { placeId = "ChIJobhEZgBJzDERWh99VyPERKs" } = req.body;
     
-    if (!placeId) {
-      return res.status(400).json({ 
-        error: 'Place ID is required' 
-      });
-    }
-
-    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-    if (!apiKey) {
-      return res.json({ 
-        placeDetails: getMockPlaceDetails(),
-        message: 'Using mock data - API key not configured'
-      });
-    }
-
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,formatted_address,rating,user_ratings_total,reviews&key=${apiKey}`;
-    
+    // Force refresh by calling the places endpoint
+    const url = `http://localhost:3003/api/google-reviews/places?placeId=${placeId}&forceRefresh=true`;
     const response = await fetch(url);
-    const data = await response.json();
-
-    if (data.status !== 'OK') {
-      return res.json({ 
-        placeDetails: getMockPlaceDetails(),
-        message: 'API error - using mock data as fallback',
-        error: data.error_message || data.status
+    
+    if (response.ok) {
+      res.json({ 
+        success: true, 
+        message: 'Cache refreshed successfully',
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(400).json({ 
+        success: false, 
+        error: 'Failed to refresh cache' 
       });
     }
-
-    res.json({ 
-      placeDetails: data.result
-    });
-
   } catch (error) {
-    console.error('Server error:', error);
-    res.json({ 
-      placeDetails: getMockPlaceDetails(),
-      message: 'Server error - using mock data as fallback',
-      error: error.message
+    res.status(500).json({ 
+      success: false, 
+      error: 'Cache refresh failed',
+      details: error.message 
     });
   }
+});
+
+// Legacy Google Places API endpoints (Optional - for backward compatibility)
+app.get('/api/google-reviews', (req, res) => {
+  res.json({
+    message: 'Legacy endpoint - use /api/google-reviews/places instead',
+    note: 'This endpoint is deprecated. Please use the new Places API endpoint with caching.',
+    newEndpoint: '/api/google-reviews/places',
+    setup: 'Add GOOGLE_PLACES_API_KEY to your .env file for real reviews'
+  });
+});
+
+app.get('/api/google-reviews/place-details', (req, res) => {
+  res.json({
+    message: 'Legacy endpoint - use /api/google-reviews/places instead',
+    note: 'This endpoint is deprecated. Please use the new Places API endpoint with caching.',
+    newEndpoint: '/api/google-reviews/places',
+    setup: 'Add GOOGLE_PLACES_API_KEY to your .env file for real reviews'
+  });
 });
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
-    status: 'OK', 
+    status: 'healthy', 
     timestamp: new Date().toISOString(),
-    googleApiKey: !!process.env.GOOGLE_PLACES_API_KEY
+    service: 'Daily Love Wellness API',
+    version: '1.0.0'
   });
 });
 
-// Mock data functions
-function getMockReviews() {
-  return [
-    {
-      author_name: "Jennifer Lee",
-      author_url: "https://maps.google.com/maps/contrib/123456789",
-      language: "en",
-      profile_photo_url: "https://lh3.googleusercontent.com/a/default-user",
-      rating: 5,
-      relative_time_description: "2 weeks ago",
-      text: "Absolutely amazing experience! The IV therapy left me feeling rejuvenated and energized. The staff is incredibly professional and the space is so peaceful. I love the Japandi aesthetic - it's like stepping into a luxury spa. Highly recommend for anyone looking for wellness treatments.",
-      time: Date.now() - 14 * 24 * 60 * 60 * 1000,
-    },
-    {
-      author_name: "Marcus Rodriguez",
-      author_url: "https://maps.google.com/maps/contrib/987654321",
-      language: "en",
-      profile_photo_url: "https://lh3.googleusercontent.com/a/default-user",
-      rating: 5,
-      relative_time_description: "1 month ago",
-      text: "Found this place through Google and I'm so glad I did! The essential oils consultation was thorough and educational. The therapist really took time to understand my needs. The quality of their oils is exceptional and the effects are noticeable immediately.",
-      time: Date.now() - 30 * 24 * 60 * 60 * 1000,
-    },
-    {
-      author_name: "Sarah Kim",
-      author_url: "https://maps.google.com/maps/contrib/456789123",
-      language: "en",
-      profile_photo_url: "https://lh3.googleusercontent.com/a/default-user",
-      rating: 5,
-      relative_time_description: "3 weeks ago",
-      text: "Best wellness center I've ever visited. The beauty & anti-aging IV drip worked wonders for my skin. The environment is so serene - I actually fell asleep during the treatment! The staff remembers my preferences and makes each visit feel personalized.",
-      time: Date.now() - 21 * 24 * 60 * 60 * 1000,
-    },
-    {
-      author_name: "David Chen",
-      author_url: "https://maps.google.com/maps/contrib/789123456",
-      language: "en",
-      profile_photo_url: "https://lh3.googleusercontent.com/a/default-user",
-      rating: 5,
-      relative_time_description: "2 months ago",
-      text: "I've been coming here for their monthly wellness package and it's been life-changing. The combination of IV therapy and essential oils has completely transformed how I feel. The staff is knowledgeable and the space is absolutely beautiful.",
-      time: Date.now() - 60 * 24 * 60 * 60 * 1000,
-    },
-    {
-      author_name: "Amanda Foster",
-      author_url: "https://maps.google.com/maps/contrib/321654987",
-      language: "en",
-      profile_photo_url: "https://lh3.googleusercontent.com/a/default-user",
-      rating: 5,
-      relative_time_description: "1 week ago",
-      text: "The immune support IV drip was exactly what I needed during flu season. I felt better immediately and stayed healthy. The warm, welcoming atmosphere makes all the difference. This place truly cares about your wellness journey.",
-      time: Date.now() - 7 * 24 * 60 * 60 * 1000,
-    },
-    {
-      author_name: "Robert Wilson",
-      author_url: "https://maps.google.com/maps/contrib/147258369",
-      language: "en",
-      profile_photo_url: "https://lh3.googleusercontent.com/a/default-user",
-      rating: 5,
-      relative_time_description: "5 days ago",
-      text: "The stress relief essential oils have revolutionized my sleep quality. The team took time to educate me on proper usage and the benefits of each oil. You can tell they're passionate about what they do. The quality is outstanding!",
-      time: Date.now() - 5 * 24 * 60 * 60 * 1000,
-    },
-  ];
-}
-
-function getMockPlaceDetails() {
-  return {
-    place_id: process.env.GOOGLE_PLACE_ID || "ChIJobhEZgBJzDERWh99VyPERKs",
-    name: "Daily Love Wellness",
-    formatted_address: "Your Business Address Here",
-    rating: 4.9,
-    user_ratings_total: 127,
-    reviews: getMockReviews()
-  };
-}
-
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 Google Reviews API: http://localhost:${PORT}/api/google-reviews`);
-  console.log(`🏥 Health Check: http://localhost:${PORT}/api/health`);
-  
-  if (!process.env.GOOGLE_PLACES_API_KEY) {
-    console.log(`⚠️  Google Places API key not found - using mock data`);
-    console.log(`   Set GOOGLE_PLACES_API_KEY in your .env file to use real reviews`);
-  } else {
-    console.log(`✅ Google Places API key configured`);
-  }
+  console.log('🚀 Server running on http://localhost:3003');
+  console.log('📊 Google Places API: http://localhost:3003/api/google-reviews/places');
+  console.log('🏥 Health Check: http://localhost:3003/api/health');
+  console.log('✅ Google Places API with daily caching ready');
+  console.log('   Add GOOGLE_PLACES_API_KEY to your .env file to enable real reviews');
 });
-
-export default app;

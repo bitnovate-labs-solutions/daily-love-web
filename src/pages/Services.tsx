@@ -3,14 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Droplets,
-  Leaf,
   Zap,
   Shield,
   Heart,
-  Brain,
-  Moon,
-  Sun,
-  Clock,
   Star,
   SmilePlus,
   Sparkles,
@@ -20,9 +15,10 @@ import {
   Activity,
   Scissors,
   Flame,
+  Moon,
+  Brain,
 } from "lucide-react";
 import ivTherapyImage from "@/assets/iv_therapy1.jpg";
-import essentialOilsImage from "@/assets/essential-oils.jpg";
 
 const Services = () => {
   const ivDrips = [
@@ -214,57 +210,19 @@ const Services = () => {
     },
   ];
 
-  const essentialOils = [
-    {
-      category: "Stress Relief & Relaxation",
-      icon: <Moon className="h-6 w-6" />,
-      oils: [
-        { name: "Lavender Premium", price: "RM 52", size: "15ml" },
-        { name: "Chamomile Roman", price: "RM 95", size: "10ml" },
-        { name: "Bergamot", price: "RM 46", size: "15ml" },
-        { name: "Ylang Ylang", price: "RM 69", size: "15ml" },
-      ],
-      description:
-        "Promote deep relaxation and peaceful sleep with our calming essential oil collection.",
-    },
-    {
-      category: "Energy & Focus",
-      icon: <Sun className="h-6 w-6" />,
-      oils: [
-        { name: "Peppermint", price: "RM 39", size: "15ml" },
-        { name: "Rosemary", price: "RM 43", size: "15ml" },
-        { name: "Lemon", price: "RM 36", size: "15ml" },
-        { name: "Eucalyptus", price: "RM 41", size: "15ml" },
-      ],
-      description:
-        "Enhance mental clarity and natural energy with our invigorating essential oil blends.",
-    },
-    {
-      category: "Wellness & Immunity",
-      icon: <Leaf className="h-6 w-6" />,
-      oils: [
-        { name: "Tea Tree", price: "RM 49", size: "15ml" },
-        { name: "Oregano", price: "RM 57", size: "10ml" },
-        { name: "Frankincense", price: "RM 112", size: "10ml" },
-        { name: "Thieves Blend", price: "RM 74", size: "15ml" },
-      ],
-      description:
-        "Support your natural wellness and immune system with these therapeutic-grade oils.",
-    },
-  ];
-
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
       <section className="relative h-96 flex items-center justify-center bg-gradient-to-br from-wellness-warm via-wellness-sage/90 to-primary/70 text-primary-foreground">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary-foreground mb-6">
-            Our Premium Services
+            IV Therapy Services
           </h1>
           <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed">
-            Discover our carefully curated wellness experiences designed to
-            restore balance, enhance vitality, and nurture your natural
-            well-being in our serene environment.
+            Experience the transformative power of IV therapy in our spa-like
+            environment. Each treatment is administered by certified
+            professionals in comfortable, private spaces designed for your
+            complete relaxation and well-being.
           </p>
         </div>
         {/* Subtle overlay for depth and text readability */}
@@ -285,7 +243,9 @@ const Services = () => {
                 certified professionals in comfortable, private spaces designed
                 for your complete relaxation and well-being.
               </p>
-              <div className="flex justify-center lg:justify-start">
+
+              {/* CODE FOR FUTURE USE ------------------------------------------------------ */}
+              {/* <div className="flex justify-center lg:justify-start">
                 <Button
                   className="w-full sm:w-auto bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground font-semibold px-6 py-3"
                   onClick={() => {
@@ -296,7 +256,8 @@ const Services = () => {
                 >
                   📄 中文手册 / Chinese Brochure
                 </Button>
-              </div>
+              </div> */}
+
               {/* <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-5 w-5 text-wellness-sage" />
@@ -420,83 +381,6 @@ Can you help me with availability and booking?`;
                     }}
                   >
                     Book This Treatment
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Essential Oils Section */}
-      <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-              <img
-                src={essentialOilsImage}
-                alt="Premium Essential Oils"
-                className="w-full h-80 object-cover rounded-2xl shadow-lg"
-              />
-            </div>
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">
-                Premium Essential Oils
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Our collection features only the finest therapeutic-grade
-                essential oils, sourced from trusted producers worldwide. Each
-                oil is rigorously tested for purity and potency to ensure you
-                receive the highest quality natural wellness support.
-              </p>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <Brain className="h-5 w-5 text-wellness-warm" />
-                  <span className="text-muted-foreground">
-                    Therapeutic grade
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Leaf className="h-5 w-5 text-wellness-warm" />
-                  <span className="text-muted-foreground">100% pure</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 md:gap-8">
-            {essentialOils.map((category, index) => (
-              <Card key={index} className="shadow-lg bg-card border border-wellness-warm/20 hover:border-wellness-warm/40 transition-all duration-300">
-                <CardHeader>
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 rounded-full bg-wellness-warm/20 text-wellness-warm">
-                      {category.icon}
-                    </div>
-                    <CardTitle className="text-lg font-serif text-primary">
-                      {category.category}
-                    </CardTitle>
-                  </div>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {category.description}
-                  </p>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {category.oils.map((oil, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between py-2 border-b border-border last:border-0"
-                    >
-                      <div>
-                        <p className="font-medium text-primary">{oil.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {oil.size}
-                        </p>
-                      </div>
-                      <p className="font-semibold text-primary">{oil.price}</p>
-                    </div>
-                  ))}
-                  <Button variant="outline" className="w-full mt-4">
-                    View Collection
                   </Button>
                 </CardContent>
               </Card>

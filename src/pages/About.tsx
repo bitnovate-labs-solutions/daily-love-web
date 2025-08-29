@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Users, Award, Leaf, X } from "lucide-react";
+import Carousel from "@/components/ui/carousel";
+import { openingDayImages } from "@/data/openingDayImages";
 
 // IMAGE ASSETS
 import wellnessSpaceImage from "@/assets/daily_love_sofa.jpg";
@@ -109,7 +111,7 @@ const About = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-20 bg-wellness-warm/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -159,8 +161,10 @@ const About = () => {
         </div>
       </section>
 
+
+
       {/* Gallery Section */}
-      <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -314,7 +318,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
+      <section className="py-20 bg-wellness-warm/10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -350,7 +354,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -413,6 +417,31 @@ const About = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Opening Day Carousel Section */}
+      <section className="py-16 bg-wellness-sage/10">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+              Opening Day
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Relive the magical moment when Daily Love Wellness first opened its doors. 
+              Experience the excitement, joy, and promise of a new beginning as we welcomed 
+              our first guests into our wellness sanctuary.
+            </p>
+          </div>
+                      <Carousel 
+              images={openingDayImages}
+              autoPlay={true}
+              interval={4000}
+              showArrows={true}
+              showDots={true}
+              showPlayPause={false}
+              className="mb-12"
+            />
         </div>
       </section>
 

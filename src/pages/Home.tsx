@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Droplets, Leaf, Heart, Star, ArrowRight } from "lucide-react";
-import essentialOilsImage from "@/assets/essential-oils.jpg";
-import ivTherapyImage from "@/assets/iv_drip_therapy.jpg";
-import wellnessSpaceImage from "@/assets/daily_love_bed.jpg";
+import { Droplets, Leaf, Heart, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import GoogleReviews from "@/components/GoogleReviews";
+import GooglePlacesReviews from "@/components/GooglePlacesReviews";
 
 // ASSETS
-import heroImage from "@/assets/daily_love_shop.jpg";
+import heroImage from "@/assets/shop_board.jpg";
+import essentialOilsImage from "@/assets/essential-oils/EO20.jpeg";
+import CASBooster from "@/assets/CAS/CAS1.jpg";
+import wellnessSpaceImage from "@/assets/daily_love_bed.jpg";
+import ivTherapyImage from "@/assets/iv_drip_therapy.jpg";
 
 const Home = () => {
   const benefits = [
@@ -20,9 +20,9 @@ const Home = () => {
     },
     {
       icon: <Leaf className="h-8 w-8" />,
-      title: "Essential Oils",
+      title: "Products",
       description:
-        "Pure, therapeutic-grade essential oils to support your natural healing and relaxation journey.",
+        "Therapeutic-grade essential oils and CAS water booster for natural healing, relaxation, and radiant skin.",
     },
     {
       icon: <Heart className="h-8 w-8" />,
@@ -32,31 +32,13 @@ const Home = () => {
     },
   ];
 
-  const testimonials = [
-    {
-      name: "Sarah M.",
-      text: "The most peaceful wellness experience I've ever had. The IV therapy left me feeling completely refreshed.",
-      rating: 5,
-    },
-    {
-      name: "Michael R.",
-      text: "Their essential oils are incredible. The quality and the serene atmosphere make this place special.",
-      rating: 5,
-    },
-    {
-      name: "Emma L.",
-      text: "I feel like I've found my sanctuary. The Japandi aesthetic and premium service are unmatched.",
-      rating: 5,
-    },
-  ];
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section
         className="relative h-screen flex items-center justify-center text-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url(${heroImage})`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -77,9 +59,12 @@ const Home = () => {
             />
 
             <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed opacity-80">
-              Experience tranquility through premium Nutri Drip therapy and
-              therapeutic essential oils in our peaceful, Japandi-inspired
-              sanctuary.
+              A sanctuary for body and spirit—experience drip therapy, essential
+              oils, and coffee that warms the soul.
+              {/* Where wellness meets comfort: premium drip therapy, calming
+              aromatherapy, and hand-crafted coffee. */}
+              {/* Experience holistic luxury — through premium Nutri Drip therapy
+              and therapeutic essential oils in a space of serenity and grace. */}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {/* CODE FOR FUTURE USE ============================================================ */}
@@ -122,11 +107,11 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
-              <Card
+              <div
                 key={index}
-                className="shadow-lg wellness-glow bg-card border-0"
+                className="shadow-lg wellness-glow bg-card border-0 rounded-2xl"
               >
-                <CardContent className="p-8 text-center">
+                <div className="p-8 text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-wellness-sage/20 text-wellness-sage mb-6">
                     {benefit.icon}
                   </div>
@@ -136,8 +121,8 @@ const Home = () => {
                   <p className="text-muted-foreground leading-relaxed">
                     {benefit.description}
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -201,20 +186,22 @@ const Home = () => {
                   out.
                 </li>
               </ul>
-              <Button 
+              <Button
                 asChild
                 className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground"
               >
-                <Link to="/services">Learn More About IV Therapy</Link>
+                <Link to="/services" onClick={() => window.scrollTo(0, 0)}>
+                  Learn More About IV Therapy
+                </Link>
               </Button>
             </div>
           </div>
 
           {/* Essential Oils Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
             <div className="space-y-6">
               <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-                Premium Essential Oils
+                Essential Oils
               </h3>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 Our collection of therapeutic-grade essential oils are sourced
@@ -228,62 +215,94 @@ const Home = () => {
                 <li>• Focus & Mental Clarity</li>
                 <li>• Natural Immunity Boost</li>
               </ul>
-              <Button 
+              <Button
                 asChild
                 className="bg-wellness-warm hover:bg-wellness-warm/90 text-wellness-warm-foreground"
               >
-                <Link to="/services">Shop Essential Oils</Link>
+                <Link to="/products" onClick={() => window.scrollTo(0, 0)}>
+                  Shop Essential Oils
+                </Link>
               </Button>
             </div>
             <div className="space-y-6">
               <img
                 src={essentialOilsImage}
-                alt="Premium Essential Oils"
+                alt="Essential Oils"
                 className="w-full aspect-square object-cover rounded-2xl shadow-lg"
               />
+            </div>
+          </div>
+
+          {/* CAS Water Booster Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <img
+                src={CASBooster}
+                alt="CAS Water Booster"
+                className="w-full aspect-square object-cover rounded-2xl shadow-lg"
+              />
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary">
+                CAS Water Booster
+              </h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                Our advanced hydration serum combines cutting-edge science with
+                natural ingredients to deliver intensive hydration and skin
+                barrier restoration for all skin types.
+              </p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• 92.74% Active Serum</li>
+                <li>• 12 Plant Extracts</li>
+                <li>• Hyaluronic Acid Technology</li>
+                <li>• Deep Hydration & Anti-Inflammation</li>
+              </ul>
+              <Button
+                asChild
+                className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground"
+              >
+                <Link
+                  to="/products"
+                  onClick={() => {
+                    // Navigate first, then scroll to section after a short delay
+                    setTimeout(() => {
+                      const element = document.getElementById("cas-skincare");
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }, 100);
+                  }}
+                >
+                  Shop CAS Water Booster
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CODE FOR FUTURE USE (WAITING TO OBTAIN API KEY FROM CLIENT TO INTEGRATE GOOGLE REVIEWS ================================) */}
-      {/* Testimonials */}
-      <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
+      {/* CODE FOR FUTURE USE ------ IMPLEMENT AFTER GOOGLE BILLING ACCOUNT AND API KEY IS SETUP --------- */}
+      {/* Google Reviews Section */}
+      {/* <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
               What Our Clients Say
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experience the peace and rejuvenation that our clients discover at
-              Daily Love Wellness.
+              Real reviews from our valued clients on Google. Experience the
+              peace and rejuvenation that our clients discover at Daily Love
+              Wellness.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="shadow-lg bg-card border-0">
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-5 w-5 fill-wellness-sage text-wellness-sage"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-6 leading-relaxed italic">
-                    "{testimonial.text}"
-                  </p>
-                  <p className="font-semibold text-primary">
-                    {testimonial.name}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <GooglePlacesReviews
+            placeId="ChIJobhEZgBJzDERWh99VyPERKs"
+            maxReviews={6}
+            showProfilePhotos={true}
+          />
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section

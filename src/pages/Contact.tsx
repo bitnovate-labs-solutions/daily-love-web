@@ -393,10 +393,11 @@ const Contact = () => {
                 <CardContent className="space-y-3">
                   <div className="flex items-start space-x-3">
                     <p className="text-sm text-muted-foreground">
-                      Parking is available in the surrounding area (paid on
+                      Reserved parking is available for our customers.
+                      {/* in the surrounding area (paid on
                       weekdays, free on weekends). <br />
                       Should no parking be available, Starling Mall’s just a
-                      short walk away.
+                      short walk away. */}
                     </p>
                   </div>
                   {/* <div className="flex items-start space-x-3">
@@ -418,8 +419,9 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* CODE FOR FUTURE USE ------------------------------------------------------------------ */}
       {/* FAQ Section */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -485,7 +487,7 @@ const Contact = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
