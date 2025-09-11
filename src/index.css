@@ -266,6 +266,59 @@
   .wellness-glow {
     @apply transition-smooth hover:shadow-warm hover:scale-105;
   }
+
+  /* Text truncation utilities */
+  .line-clamp-6 {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Glassmorphism utilities */
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .glassmorphism-dark {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .glassmorphism-warm {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(139, 69, 19, 0.2);
+  }
+
+  /* Logo enhancement utilities */
+  .logo-glow {
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.6)) 
+            drop-shadow(0 0 60px rgba(255, 255, 255, 0.3))
+            drop-shadow(0 0 100px rgba(255, 255, 255, 0.1))
+            brightness(1.3) 
+            contrast(1.2) 
+            saturate(1.2);
+  }
+
+  .logo-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+  }
 }
 
 @layer base {

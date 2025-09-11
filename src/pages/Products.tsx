@@ -28,10 +28,17 @@ import EO3Image from "@/assets/essential-oils/EO14.jpeg";
 // import EO5Image from "@/assets/essential-oils/EO5.jpeg";
 import EO7Image from "@/assets/essential-oils/EO7.jpeg";
 import casImage from "@/assets/CAS/CAS.png";
-import casVideo from "@/assets/CAS/CAS.mp4";
+import casVideo from "@/assets/CAS/water_booster.mp4";
 
 const Products = () => {
-  const [showVideoPopup, setShowVideoPopup] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
+
+  const handlePlayButtonClick = () => {
+    if (videoRef) {
+      videoRef.play();
+    }
+  };
 
   const essentialOils = [
     {
@@ -96,41 +103,41 @@ const Products = () => {
         "Plant extracts",
         "Suitable for all skin types",
       ],
-      popular: true,
+      popular: false,
     },
-    {
-      name: "C.A.S Sleeping Mask",
-      icon: <Moon className="h-6 w-6" />,
-      price: "RM 220",
-      description:
-        "Overnight intensive treatment mask for deep nourishment and skin repair.",
-      size: "50ml",
-      features: [
-        "Overnight treatment",
-        "Deep nourishment",
-        "Skin repair",
-        "Better Tomorrow formula",
-      ],
-    },
-    {
-      name: "C.A.S Eye Cream",
-      icon: <EyeOff className="h-6 w-6" />,
-      price: "RM 160",
-      description:
-        "Specialized eye care treatment for delicate eye area with gentle, effective ingredients.",
-      size: "15ml",
-      features: [
-        "Gentle formula",
-        "Eye area specific",
-        "Anti-aging",
-        "Delicate care",
-      ],
-    },
+    // {
+    //   name: "C.A.S Sleeping Mask",
+    //   icon: <Moon className="h-6 w-6" />,
+    //   price: "RM 220",
+    //   description:
+    //     "Overnight intensive treatment mask for deep nourishment and skin repair.",
+    //   size: "50ml",
+    //   features: [
+    //     "Overnight treatment",
+    //     "Deep nourishment",
+    //     "Skin repair",
+    //     "Better Tomorrow formula",
+    //   ],
+    // },
+    // {
+    //   name: "C.A.S Eye Cream",
+    //   icon: <EyeOff className="h-6 w-6" />,
+    //   price: "RM 160",
+    //   description:
+    //     "Specialized eye care treatment for delicate eye area with gentle, effective ingredients.",
+    //   size: "15ml",
+    //   features: [
+    //     "Gentle formula",
+    //     "Eye area specific",
+    //     "Anti-aging",
+    //     "Delicate care",
+    //   ],
+    // },
   ];
 
   return (
     <div className="min-h-screen pt-16">
-      {/* Hero Section */}
+      {/* HERO SECTION ================================================================================= */}
       <section className="relative h-96 flex items-center justify-center bg-gradient-to-br from-wellness-warm via-wellness-sage/90 to-primary/70 text-primary-foreground">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary-foreground mb-6">
@@ -146,130 +153,7 @@ const Products = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent"></div>
       </section>
 
-      {/* Essential Oils Section */}
-      <section id="essential-oils" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-              <img
-                src={essentialOilsImage}
-                alt="Essential Oils"
-                className="w-full h-86 object-cover rounded-2xl shadow-lg"
-                loading="lazy"
-              />
-            </div>
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">
-                Essential Oils
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Our collection features only the finest therapeutic-grade
-                essential oils, sourced from trusted producers worldwide. Each
-                oil is rigorously tested for purity and potency to ensure you
-                receive the highest quality natural wellness support.
-              </p>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <Brain className="h-5 w-5 text-wellness-warm" />
-                  <span className="text-muted-foreground">
-                    Therapeutic grade
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Leaf className="h-5 w-5 text-wellness-warm" />
-                  <span className="text-muted-foreground">100% pure</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 md:gap-8">
-            {essentialOils.map((category, index) => (
-              <Card
-                key={index}
-                className="shadow-lg bg-card border border-wellness-warm/20 hover:border-wellness-warm/40 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="mb-4">
-                    {category.image ? (
-                      <img
-                        src={category.image}
-                        alt={category.category}
-                        className="w-full aspect-square object-cover rounded-lg mb-3"
-                        loading="lazy"
-                        onError={(e) => {
-                          // Fallback to placeholder if image fails to load
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = "none";
-                          const nextSibling = target.nextSibling as HTMLElement;
-                          if (nextSibling) {
-                            nextSibling.style.display = "flex";
-                          }
-                        }}
-                      />
-                    ) : null}
-                    <div
-                      className={`w-full aspect-square bg-gradient-to-br from-wellness-warm/20 to-wellness-sage/20 rounded-lg mb-3 flex items-center justify-center ${
-                        category.image ? "hidden" : "flex"
-                      }`}
-                    >
-                      <div className="text-center p-4">
-                        <div className="text-4xl mb-3">🌿</div>
-                        <p className="text-sm text-muted-foreground font-medium">
-                          {category.category}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Essential Oil Collection
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <CardTitle className="text-lg font-serif text-primary mb-3">
-                    {category.category}
-                  </CardTitle>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {category.description}
-                  </p>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {category.oils.map((oil, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between py-2 border-b border-border last:border-0"
-                    >
-                      <div>
-                        <p className="font-medium text-primary">{oil.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {oil.size}
-                        </p>
-                      </div>
-                      <p className="font-semibold text-primary">{oil.price}</p>
-                    </div>
-                  ))}
-                  <Button
-                    className="w-full bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground mt-4"
-                    onClick={() => {
-                      const phoneNumber = "+6013-959 9476";
-                      const message = `Hi! I'd like to purchase some essential oils from the ${category.category} collection at Daily Love Wellness.
-
-Can you help me with availability and pricing for these oils?`;
-                      const whatsappUrl = `https://wa.me/${phoneNumber.replace(
-                        /[^0-9]/g,
-                        ""
-                      )}?text=${encodeURIComponent(message)}`;
-                      window.open(whatsappUrl, "_blank");
-                    }}
-                  >
-                    Order Collection
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* C.A.S Skincare Products Section */}
+      {/* C.A.S SECTION ================================================================================= */}
       <section
         id="cas-skincare"
         className="py-20 bg-gradient-to-b from-secondary/30 to-background"
@@ -281,46 +165,35 @@ Can you help me with availability and pricing for these oils?`;
               C.A.S Premium Skincare
             </h2>
 
-            {/* C.A.S Image - Full Width at Top */}
-            <div className="relative">
-              <img
-                src={casImage}
-                alt="C.A.S Premium Skincare Collection"
-                className="w-full sm:aspect-[5/2] object-cover rounded-2xl shadow-lg"
-                loading="lazy"
-                onError={(e) => {
-                  // Fallback to placeholder if image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = "none";
-                  const nextSibling = target.nextSibling as HTMLElement;
-                  if (nextSibling) {
-                    nextSibling.style.display = "flex";
-                  }
-                }}
-              />
-              {/* Fallback placeholder */}
-              <div className="hidden w-full aspect-[3/2] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-lg flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <div className="text-6xl">🧴</div>
-                  <p className="text-lg font-medium text-gray-600">
-                    C.A.S Skincare Collection
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Water Booster • Sleeping Mask • Eye Cream
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* C.A.S Video Container - Full Width at Top */}
+            <div className="relative group">
+              <div className="relative w-full sm:aspect-[5/2] rounded-2xl shadow-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+                {/* Video Element */}
+                <video
+                  ref={setVideoRef}
+                  className="w-full h-full"
+                  controls
+                  poster={casImage}
+                  onPlay={() => setIsVideoPlaying(true)}
+                  onPause={() => setIsVideoPlaying(false)}
+                  onEnded={() => setIsVideoPlaying(false)}
+                >
+                  <source src={casVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
 
-            {/* Watch Demo Button */}
-            <div className="flex justify-center">
-              <Button
-                onClick={() => setShowVideoPopup(true)}
-                className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground font-semibold px-10 py-2 shadow-lg text-md"
-              >
-                <Play className="h-4 w-4 mr-2" />
-                Watch Demo
-              </Button>
+                {/* Play/Pause Overlay - Only show when video is not playing */}
+                {!isVideoPlaying && (
+                  <div
+                    className="absolute inset-0 bg-black/20 flex items-center justify-center transition-all duration-300 cursor-pointer"
+                    onClick={handlePlayButtonClick}
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-6 shadow-2xl hover:bg-white hover:scale-110 transition-all duration-300">
+                      <Play className="h-12 w-12 text-wellness-sage fill-current" />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* C.A.S Content - Full Width Below Image */}
@@ -507,6 +380,129 @@ Can you help me with availability and ordering?`;
         </div>
       </section>
 
+      {/* ESSENTIAL OILS SECTION ================================================================================= */}
+      <section id="essential-oils" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div>
+              <img
+                src={essentialOilsImage}
+                alt="Essential Oils"
+                className="w-full h-86 object-cover rounded-2xl shadow-lg"
+                loading="lazy"
+              />
+            </div>
+            <div className="space-y-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">
+                Essential Oils
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Our collection features only the finest therapeutic-grade
+                essential oils, sourced from trusted producers worldwide. Each
+                oil is rigorously tested for purity and potency to ensure you
+                receive the highest quality natural wellness support.
+              </p>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <Brain className="h-5 w-5 text-wellness-warm" />
+                  <span className="text-muted-foreground">
+                    Therapeutic grade
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Leaf className="h-5 w-5 text-wellness-warm" />
+                  <span className="text-muted-foreground">100% pure</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 md:gap-8">
+            {essentialOils.map((category, index) => (
+              <Card
+                key={index}
+                className="shadow-lg bg-card border border-wellness-warm/20 hover:border-wellness-warm/40 transition-all duration-300"
+              >
+                <CardHeader>
+                  <div className="mb-4">
+                    {category.image ? (
+                      <img
+                        src={category.image}
+                        alt={category.category}
+                        className="w-full aspect-square object-cover rounded-lg mb-3"
+                        loading="lazy"
+                        onError={(e) => {
+                          // Fallback to placeholder if image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                          const nextSibling = target.nextSibling as HTMLElement;
+                          if (nextSibling) {
+                            nextSibling.style.display = "flex";
+                          }
+                        }}
+                      />
+                    ) : null}
+                    <div
+                      className={`w-full aspect-square bg-gradient-to-br from-wellness-warm/20 to-wellness-sage/20 rounded-lg mb-3 flex items-center justify-center ${
+                        category.image ? "hidden" : "flex"
+                      }`}
+                    >
+                      <div className="text-center p-4">
+                        <div className="text-4xl mb-3">🌿</div>
+                        <p className="text-sm text-muted-foreground font-medium">
+                          {category.category}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Essential Oil Collection
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <CardTitle className="text-lg font-serif text-primary mb-3">
+                    {category.category}
+                  </CardTitle>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {category.description}
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {category.oils.map((oil, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between py-2 border-b border-border last:border-0"
+                    >
+                      <div>
+                        <p className="font-medium text-primary">{oil.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {oil.size}
+                        </p>
+                      </div>
+                      <p className="font-semibold text-primary">{oil.price}</p>
+                    </div>
+                  ))}
+                  <Button
+                    className="w-full bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground mt-4"
+                    onClick={() => {
+                      const phoneNumber = "+6013-959 9476";
+                      const message = `Hi! I'd like to purchase some essential oils from the ${category.category} collection at Daily Love Wellness.
+
+Can you help me with availability and pricing for these oils?`;
+                      const whatsappUrl = `https://wa.me/${phoneNumber.replace(
+                        /[^0-9]/g,
+                        ""
+                      )}?text=${encodeURIComponent(message)}`;
+                      window.open(whatsappUrl, "_blank");
+                    }}
+                  >
+                    Order Collection
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Product Quality Assurance */}
       <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
         <div className="container mx-auto px-4">
@@ -560,51 +556,6 @@ Can you help me with availability and ordering?`;
           </div>
         </div>
       </section>
-
-      {/* Video Popup Modal */}
-      {showVideoPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-4xl mx-4 bg-background rounded-2xl shadow-2xl overflow-hidden">
-            {/* Close Button */}
-            <button
-              onClick={() => setShowVideoPopup(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
-            >
-              <X className="h-6 w-6" />
-            </button>
-
-            {/* Video Container */}
-            <div className="relative w-full aspect-video bg-black">
-              <video
-                className="w-full h-full object-contain"
-                controls
-                autoPlay
-                muted
-                onLoadedData={() => {
-                  // Video loaded successfully
-                }}
-                onError={(e) => {
-                  console.error("Video failed to load:", e);
-                }}
-              >
-                <source src={casVideo} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-
-            {/* Video Description */}
-            {/* <div className="p-6">
-              <h3 className="text-xl font-serif font-semibold text-primary mb-2">
-                CAS Water Booster - How to Use
-              </h3>
-              <p className="text-muted-foreground">
-                Learn the proper application techniques for maximum hydration
-                and skin barrier repair.
-              </p>
-            </div> */}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

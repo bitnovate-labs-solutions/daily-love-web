@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Droplets, Leaf, Heart, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import GooglePlacesReviews from "@/components/GooglePlacesReviews";
+import ReviewsCarousel from "@/components/ReviewsCarousel";
 
 // ASSETS
 import heroImage from "@/assets/shop_board.jpg";
@@ -34,64 +34,58 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* HERO SECTION ============================================================================= */}
       <section
         className="relative h-screen flex items-center justify-center text-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(${heroImage})`,
+          backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="container mx-auto px-4 z-10">
+        {/* Glassmorphism Background Overlay */}
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div> */}
+
+        <div className="container mx-auto px-4 z-10 relative">
           <div className="max-w-4xl mx-auto text-white">
-            {/* <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
-              Welcome to
-              <span className="block text-wellness-warm">
-                Daily Love Wellness
-              </span>
-            </h1> */}
+            {/* Glassmorphism Content Container */}
+            <div className="glassmorphism-warm rounded-3xl p-8 md:p-12 mx-4 mt-40 md:mt-0">
+              <img
+                src="/dailylove_banner.png"
+                alt="Daily Love Logo"
+                className="h-auto w-full max-w-2xl mx-auto mb-8 logo-glow"
+                loading="eager"
+                fetchPriority="high"
+              />
 
-            <img
-              src="/dailylove_banner.png"
-              alt="Daily Love Logo"
-              className="h-auto w-full max-w-2xl mx-auto px-4"
-              loading="eager"
-              fetchPriority="high"
-            />
+              <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed text-white drop-shadow-lg">
+                A sanctuary for body and spirit—experience drip therapy,
+                essential oils, and coffee that warms the soul.
+              </p>
 
-            <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed opacity-80">
-              A sanctuary for body and spirit—experience drip therapy, essential
-              oils, and coffee that warms the soul.
-              {/* Where wellness meets comfort: premium drip therapy, calming
-              aromatherapy, and hand-crafted coffee. */}
-              {/* Experience holistic luxury — through premium Nutri Drip therapy
-              and therapeutic essential oils in a space of serenity and grace. */}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* CODE FOR FUTURE USE ============================================================ */}
-              {/* <Button
-                size="lg"
-                className="bg-wellness-sage hover:bg-wellness-sage/90 text-wellness-sage-foreground font-semibold px-8 py-4 rounded-full"
-              >
-                Book Your Wellness Session
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button> */}
-              <Button
-                // variant="outline"
-                size="lg"
-                asChild
-                className="bg-wellness-sage hover:bg-wellness-sage/90 text-wellness-sage-foreground font-semibold px-8 py-4"
-                // className="border-white/80 text-white hover:bg-white hover:text-primary font-semibold px-8 py-4 rounded-full backdrop-blur-sm bg-white/10"
-              >
-                <Link to="/services">Explore Our Services</Link>
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                {/* CODE FOR FUTURE USE ============================================================ */}
+                {/* <Button
+                  size="lg"
+                  className="bg-wellness-sage hover:bg-wellness-sage/90 text-wellness-sage-foreground font-semibold px-8 py-4 rounded-full"
+                >
+                  Book Your Wellness Session
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button> */}
+                <Button
+                  size="lg"
+                  asChild
+                  className="bg-wellness-sage hover:bg-wellness-sage/90 text-white font-semibold px-8 py-4"
+                >
+                  <Link to="/services">Explore Our Services</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* WHY CHOOSE US SECTION ============================================================================= */}
       <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -130,12 +124,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Services Preview */}
+      {/* OUR CRAFTED WELLNESS SERVICES SECTION ============================================================================= */}
       <section className="py-20 bg-wellness-sage/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Our Premium Services
+              Our Crafted Wellness Services
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Carefully curated wellness experiences designed to restore balance
@@ -286,30 +280,31 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CODE FOR FUTURE USE ------ IMPLEMENT AFTER GOOGLE BILLING ACCOUNT AND API KEY IS SETUP --------- */}
-      {/* Google Reviews Section */}
-      {/* <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
+      {/* GOOGLE REVIEWS SECTION =================================================================== */}
+      <section className="py-20 bg-gradient-to-b from-secondary/30 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              What Our Clients Say
+              Client Testimonials
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Real reviews from our valued clients on Google. Experience the
-              peace and rejuvenation that our clients discover at Daily Love
-              Wellness.
+              Discover what our clients say about their transformative wellness
+              experiences. Each review tells a story of healing and renewal.
             </p>
           </div>
 
-          <GooglePlacesReviews
+          <ReviewsCarousel
             placeId="ChIJobhEZgBJzDERWh99VyPERKs"
-            maxReviews={6}
+            maxReviews={5}
             showProfilePhotos={true}
+            autoPlay={true}
+            interval={6000}
+            reviewsPerPage={2}
           />
         </div>
-      </section> */}
+      </section>
 
-      {/* CTA Section */}
+      {/* CTA SECTION ============================================================================ */}
       <section
         className="py-20 relative"
         style={{

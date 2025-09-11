@@ -54,14 +54,6 @@ const Footer = () => {
                   Services
                 </Link>
               </li>
-              {/* <li>
-                <Link
-                  to="/reviews"
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-smooth text-sm"
-                >
-                  Reviews
-                </Link>
-              </li> */}
               <li>
                 <Link
                   to="/contact"

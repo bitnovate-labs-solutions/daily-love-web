@@ -6,14 +6,12 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import AboutUnderConstruction from "./pages/AboutUnderConstruction";
-// import About from "./pages/About";
+// import AboutUnderConstruction from "./pages/AboutUnderConstruction";
+import About from "./pages/About";
 import Services from "./pages/Services";
 import Products from "./pages/Products";
-import Reviews from "./pages/Reviews";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-
 
 // ScrollToTop component
 import { useEffect } from "react";
@@ -39,11 +37,10 @@ const App = () => (
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/about" element={<AboutUnderConstruction />} />
-              {/* <Route path="/about" element={<About />} /> */}
+              {/* <Route path="/about" element={<AboutUnderConstruction />} /> */}
+              <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/products" element={<Products />} />
-              {/* <Route path="/reviews" element={<Reviews />} /> */}
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

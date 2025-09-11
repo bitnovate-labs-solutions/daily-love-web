@@ -5,11 +5,15 @@ import Carousel from "@/components/ui/carousel";
 import { openingDayImages } from "@/data/openingDayImages";
 
 // IMAGE ASSETS
-import wellnessSpaceImage from "@/assets/daily_love_sofa.jpg";
+// import wellnessSpaceImage from "@/assets/daily_love_sofa.jpg";
+import wellnessSpaceImage from "@/assets/about_hero.png";
 import dailyLoveShop2Image from "@/assets/daily_love_shop2.jpg";
 import dailyLoveChairsImage from "@/assets/daily_love_chairs.jpg";
 import dailyLoveBedImage from "@/assets/daily_love_bed.jpg";
 import ivTherapyImage from "@/assets/iv_drip.jpg";
+
+// VIDEO ASSETS
+import casVideo from "@/assets/about_dlw.mp4";
 
 const About = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -91,13 +95,13 @@ const About = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      {/* Hero Section */}
+      {/* HERO SECTION ================================================================================= */}
       <section
         className="relative h-96 flex items-center justify-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.9)), url(${wellnessSpaceImage})`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url(${wellnessSpaceImage})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "top",
         }}
       >
         <div className="container mx-auto px-4 text-center text-white">
@@ -110,7 +114,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Story Section */}
+      {/* STORY SECTION ================================================================================= */}
       <section className="py-20 bg-wellness-warm/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -120,40 +124,44 @@ const About = () => {
                   A Journey Towards Wellness
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Daily Love Wellness was born from a simple yet profound
-                  belief: that true wellness should be accessible, natural, and
-                  deeply restorative. Our founder's personal journey through
-                  stress and burnout led to the discovery of how IV therapy and
-                  therapeutic essential oils could transform not just physical
-                  health, but entire well-being.
+                  For centuries, emperors, empresses, kings, and queens searched
+                  tirelessly for ways to preserve youth and extend life. From
+                  ancient elixirs to secret remedies, history shows us one
+                  truth: the desire for longevity and beauty is timeless.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Inspired by the Japandi philosophy of finding beauty in
-                  simplicity and harmony in nature, we created a space where
-                  modern wellness meets timeless tranquility. Every aspect of
-                  our sanctuary—from the warm wood tones to the carefully
-                  curated essential oil blends—reflects our commitment to your
-                  peaceful restoration.
+                  Today, modern science has turned that dream into reality.
+                  Advanced wellness therapies like IV nutrient drips deliver
+                  essential vitamins and antioxidants directly into the
+                  bloodstream — achieving results no surface-level treatment can
+                  match.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  That’s what we do at Daily Love Wellness. Our treatments are
+                  not cookie-cutter packages. They’re unique blends designed for
+                  real life — whether you’re recovering from a busy week,
+                  prepping for a big event, or just investing in your long-term
+                  glow. Because looking good is great, but feeling unstoppable?
+                  That’s even better.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  With love from <b>Daily Love Wellness</b>
                 </p>
               </div>
               <div className="relative h-full">
-                <div
-                  className="w-full h-full rounded-2xl flex items-center justify-center relative overflow-hidden shadow-lg"
-                  style={{
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(${dailyLoveShop2Image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  <div className="text-center p-8 text-white relative z-10">
-                    <Leaf className="h-16 w-16 text-white mx-auto mb-4" />
-                    <h3 className="text-xl font-serif font-semibold text-white mb-2">
-                      Founded in 2020
-                    </h3>
-                    <p className="text-white/90">
-                      With a vision to make wellness accessible and beautiful
-                    </p>
-                  </div>
+                <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg relative">
+                  <video
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  >
+                    <source src={casVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  {/* Optional overlay for better text readability if needed */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
               </div>
             </div>
@@ -161,9 +169,7 @@ const About = () => {
         </div>
       </section>
 
-
-
-      {/* Gallery Section */}
+      {/* OUR SANCTUARY SECTION ================================================================================= */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -272,7 +278,7 @@ const About = () => {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-wellness-sage/20">
+      {/* <section className="py-20 bg-wellness-sage/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-8">
@@ -316,10 +322,10 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values Section */}
-      <section className="py-20 bg-wellness-warm/10">
+      {/* <section className="py-20 bg-wellness-warm/10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -352,10 +358,10 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Team Section */}
-      <section className="py-20 bg-background">
+      {/* <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
@@ -369,7 +375,6 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {/* Team members would go here - for now, we'll use placeholder content */}
             <Card className="shadow-soft bg-card border-0">
               <CardContent className="p-8 text-center">
                 <div className="w-24 h-24 rounded-full bg-wellness-sage/20 mx-auto mb-4"></div>
@@ -419,7 +424,7 @@ const About = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Opening Day Carousel Section */}
       <section className="py-16 bg-wellness-sage/10">
@@ -429,20 +434,21 @@ const About = () => {
               Opening Day
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Relive the magical moment when Daily Love Wellness first opened its doors. 
-              Experience the excitement, joy, and promise of a new beginning as we welcomed 
-              our first guests into our wellness sanctuary.
+              Relive the magical moment when Daily Love Wellness first opened
+              its doors. Experience the excitement, joy, and promise of a new
+              beginning as we welcomed our first guests into our wellness
+              sanctuary.
             </p>
           </div>
-                      <Carousel 
-              images={openingDayImages}
-              autoPlay={true}
-              interval={4000}
-              showArrows={true}
-              showDots={true}
-              showPlayPause={false}
-              className="mb-12"
-            />
+          <Carousel
+            images={openingDayImages}
+            autoPlay={true}
+            interval={4000}
+            showArrows={true}
+            showDots={true}
+            showPlayPause={false}
+            className="mb-12"
+          />
         </div>
       </section>
 

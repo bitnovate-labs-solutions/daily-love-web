@@ -57,32 +57,12 @@ export const openingDayImages: OpeningDayImage[] = [
     alt: "Opening day wellness space tour - Guided experience",
   },
   {
-    src: "/images/opening-day/IMG_0052.JPG",
-    alt: "First guests experiencing wellness - Opening day",
-  },
-  {
     src: "/images/opening-day/IMG_0053.JPG",
     alt: "Opening day wellness atmosphere - Tranquil space",
   },
   {
     src: "/images/opening-day/IMG_0054.JPG",
     alt: "Wellness team opening day photo - Professional pride",
-  },
-  {
-    src: "/images/opening-day/IMG_0058.JPG",
-    alt: "Opening day wellness treatments - First sessions",
-  },
-  {
-    src: "/images/opening-day/IMG_0061.JPG",
-    alt: "Wellness space opening celebration - Community gathering",
-  },
-  {
-    src: "/images/opening-day/IMG_0062.JPG",
-    alt: "Opening day wellness consultations - Expert guidance",
-  },
-  {
-    src: "/images/opening-day/IMG_0065.JPG",
-    alt: "First wellness experience setup - Perfect preparation",
   },
   {
     src: "/images/opening-day/IMG_0070.JPG",
@@ -93,16 +73,8 @@ export const openingDayImages: OpeningDayImage[] = [
     alt: "Wellness space grand opening tour - Behind the scenes",
   },
   {
-    src: "/images/opening-day/IMG_0073.JPG",
-    alt: "Opening day wellness atmosphere - Peaceful ambiance",
-  },
-  {
     src: "/images/opening-day/IMG_0075.JPG",
     alt: "First guests at wellness space - Welcoming experience",
-  },
-  {
-    src: "/images/opening-day/IMG_0086.JPG",
-    alt: "Opening day wellness celebrations - Joyful moments",
   },
   {
     src: "/images/opening-day/IMG_0088.JPG",
@@ -113,16 +85,8 @@ export const openingDayImages: OpeningDayImage[] = [
     alt: "Opening day wellness treatments - Professional care",
   },
   {
-    src: "/images/opening-day/Daily Love-10.jpg",
-    alt: "Wellness space opening ceremony - Ribbon cutting",
-  },
-  {
     src: "/images/opening-day/Daily Love-12.jpg",
     alt: "Opening day wellness consultations - Expert advice",
-  },
-  {
-    src: "/images/opening-day/Daily Love-14.jpg",
-    alt: "First wellness experience setup - Perfect preparation",
   },
   {
     src: "/images/opening-day/Daily Love-15.jpg",
@@ -133,20 +97,8 @@ export const openingDayImages: OpeningDayImage[] = [
     alt: "Wellness space grand opening tour - Behind the scenes",
   },
   {
-    src: "/images/opening-day/Daily Love-18.jpg",
-    alt: "Opening day wellness atmosphere - Peaceful ambiance",
-  },
-  {
     src: "/images/opening-day/Daily Love-19.jpg",
     alt: "First guests at wellness space - Welcoming experience",
-  },
-  {
-    src: "/images/opening-day/Daily Love-20.jpg",
-    alt: "Opening day wellness celebrations - Joyful moments",
-  },
-  {
-    src: "/images/opening-day/Daily Love-21.jpg",
-    alt: "Wellness team opening day joy - Success celebration",
   },
   {
     src: "/images/opening-day/Daily Love-23.jpg",
@@ -185,10 +137,6 @@ export const openingDayImages: OpeningDayImage[] = [
     alt: "Opening day wellness celebrations - Joyful moments",
   },
   {
-    src: "/images/opening-day/Daily Love-58.jpg",
-    alt: "Wellness team opening day joy - Success celebration",
-  },
-  {
     src: "/images/opening-day/IMG_9960.JPG",
     alt: "Opening day wellness treatments - Professional care",
   },
@@ -223,13 +171,5 @@ export const openingDayImages: OpeningDayImage[] = [
   {
     src: "/images/opening-day/IMG_9994.JPG",
     alt: "Opening day wellness celebrations - Joyful moments",
-  },
-  {
-    src: "/images/opening-day/IMG_9999.JPG",
-    alt: "Wellness team opening day joy - Success celebration",
-  },
-  {
-    src: "/images/opening-day/Daily Love-friends.jpg",
-    alt: "Wellness team opening day joy - Success celebration",
   },
 ];

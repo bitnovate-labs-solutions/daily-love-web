@@ -12,7 +12,6 @@ const Navigation = () => {
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/products", label: "Products" },
-    // { href: "/reviews", label: "Reviews" },  // CODE FOR FUTURE USE =========================================
     { href: "/contact", label: "Contact" },
   ];
 
