@@ -10,10 +10,15 @@
     {
       "src": "/api/(.*)",
       "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
     }
   ],
   "env": {
-    "GOOGLE_PLACES_API_KEY": "@google-places-api-key"
+    "GOOGLE_PLACES_API_KEY": "@google-places-api-key",
+    "NODE_ENV": "production"
   },
   "functions": {
     "server.js": {

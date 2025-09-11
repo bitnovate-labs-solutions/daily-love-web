@@ -13,6 +13,8 @@ const PORT = process.env.PORT || 3003;
 const getAllowedOrigins = () => {
   const baseOrigins = [
     'http://localhost:8080', // Development
+    'http://localhost:5173', // Vite dev server
+    'http://localhost:3000', // Alternative dev port
   ];
   
   // Add production domains if they exist
@@ -22,14 +24,18 @@ const getAllowedOrigins = () => {
     'https://www.dailylovewellness.com'
   ];
   
-  // In production, add all domains
-  if (process.env.NODE_ENV === 'production') {
+  // Add Vercel preview URLs
+  if (process.env.VERCEL_URL) {
+    productionDomains.push(`https://${process.env.VERCEL_URL}`);
+  }
+  
+  // In production or Vercel environment, add all domains
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
     return [...baseOrigins, ...productionDomains];
   }
   
-  // In development, you can choose to include production domains for testing
-  // or keep only localhost for maximum security
-  return baseOrigins;
+  // In development, include all origins for flexibility
+  return [...baseOrigins, ...productionDomains];
 };
 
 // Simple rate limiting (requests per IP per minute)
@@ -272,7 +278,10 @@ app.post('/api/google-reviews/refresh-cache', async (req, res) => {
     const { placeId = "ChIJobhEZgBJzDERWh99VyPERKs" } = req.body;
     
     // Force refresh by calling the places endpoint
-    const url = `http://localhost:3003/api/google-reviews/places?placeId=${placeId}&forceRefresh=true`;
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : `http://localhost:${PORT}`;
+    const url = `${baseUrl}/api/google-reviews/places?placeId=${placeId}&forceRefresh=true`;
     const response = await fetch(url);
     
     if (response.ok) {
@@ -322,11 +331,27 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     service: 'Daily Love Wellness API',
     version: '1.0.0',
+    environment: process.env.NODE_ENV || 'development',
+    vercel: !!process.env.VERCEL,
     security: {
       rateLimitEnabled: true,
       originValidation: true,
       userAgentValidation: true,
       apiRestrictions: 'Places API only'
+    }
+  });
+});
+
+// Root endpoint for Vercel health checks
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Daily Love Wellness API Server',
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/api/health',
+      reviews: '/api/google-reviews/places',
+      cacheStatus: '/api/google-reviews/cache-status'
     }
   });
 });
@@ -512,14 +537,19 @@ app.get('/api/security-status', (req, res) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log('🚀 Server running on http://localhost:3003');
-  console.log('📊 Google Places API: http://localhost:3003/api/google-reviews/places');
-  console.log('🔍 Text Search API: http://localhost:3003/api/google-reviews/text-search');
-  console.log('🏥 Health Check: http://localhost:3003/api/health');
-  console.log('✅ Google Places API with daily caching ready');
-  console.log('   Add GOOGLE_PLACES_API_KEY to your .env file to enable real reviews');
-  console.log('🌐 Allowed Origins:', getAllowedOrigins());
-  console.log('🔒 Environment:', process.env.NODE_ENV || 'development');
-});
+// Export the app for Vercel
+export default app;
+
+// Start server only in development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log('🚀 Server running on http://localhost:3003');
+    console.log('📊 Google Places API: http://localhost:3003/api/google-reviews/places');
+    console.log('🔍 Text Search API: http://localhost:3003/api/google-reviews/text-search');
+    console.log('🏥 Health Check: http://localhost:3003/api/health');
+    console.log('✅ Google Places API with daily caching ready');
+    console.log('   Add GOOGLE_PLACES_API_KEY to your .env file to enable real reviews');
+    console.log('🌐 Allowed Origins:', getAllowedOrigins());
+    console.log('🔒 Environment:', process.env.NODE_ENV || 'development');
+  });
+}
