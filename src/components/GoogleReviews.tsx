@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote, ExternalLink } from "lucide-react";
+import { getApiUrl } from '@/config/googlePlaces';
 
 interface GoogleReview {
   author_name: string;
@@ -34,7 +35,7 @@ const GoogleReviews = ({
         
         // Try to fetch from our server API first
         try {
-          const response = await fetch(`http://localhost:3003/api/google-reviews?placeId=${placeId}&maxResults=${maxReviews}`);
+          const response = await fetch(getApiUrl(`/api/google-reviews?placeId=${placeId}&maxResults=${maxReviews}`));
           
           if (response.ok) {
             const data = await response.json();

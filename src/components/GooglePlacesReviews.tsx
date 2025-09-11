@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from "@/components/ui/button";
 import { Star, Quote, ExternalLink, MapPin, AlertCircle, CheckCircle, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl } from '@/config/googlePlaces';
 
 // ============================================================================
 // 🎭 TEMPORARY MOCK DATA - REMOVE THIS SECTION WHEN YOU GET YOUR API KEY
@@ -144,7 +145,7 @@ const GooglePlacesReviews = ({
 
       // Check if we have an API key
       const response = await fetch(
-        `http://localhost:3003/api/google-reviews/places?placeId=${placeId}&maxResults=${maxReviews}`
+        getApiUrl(`/api/google-reviews/places?placeId=${placeId}&maxResults=${maxReviews}`)
       );
 
       if (response.ok) {

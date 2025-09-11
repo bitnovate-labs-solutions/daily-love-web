@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star, Quote, ExternalLink, MapPin, AlertCircle, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl } from '@/config/googlePlaces';
 
 interface GoogleReview {
   author_name: string;
@@ -124,7 +125,7 @@ const GoogleReviewsClientSide = ({
 
       // Try to fetch from our server API first
       const response = await fetch(
-        `http://localhost:3003/api/google-reviews/places?placeId=${placeId}&maxResults=${maxReviews}`
+        getApiUrl(`/api/google-reviews/places?placeId=${placeId}&maxResults=${maxReviews}`)
       );
 
       if (response.ok) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, ChevronLeft, ChevronRight, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl } from '@/config/googlePlaces';
 
 interface GoogleReview {
   author_name: string;
@@ -56,7 +57,7 @@ const ReviewsCarousel = ({
       setError(null);
 
       const response = await fetch(
-        `http://localhost:3003/api/google-reviews/places?placeId=${placeId}&maxResults=${maxReviews}`
+        getApiUrl(`/api/google-reviews/places?placeId=${placeId}&maxResults=${maxReviews}`)
       );
 
       if (response.ok) {
