@@ -1,27 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/server.js"
-    }
-  ],
   "env": {
     "GOOGLE_PLACES_API_KEY": "@google-places-api-key",
     "NODE_ENV": "production"
   },
   "functions": {
-    "server.js": {
+    "api/**/*.js": {
       "maxDuration": 30
     }
   }
