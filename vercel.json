@@ -1,7 +1,6 @@
 {
   "version": 2,
   "env": {
-    "GOOGLE_PLACES_API_KEY": "@google-places-api-key",
     "NODE_ENV": "production"
   },
   "functions": {
