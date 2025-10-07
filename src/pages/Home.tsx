@@ -187,60 +187,21 @@ const Home = () => {
                 asChild
                 className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground"
               >
-                <Link to="/services" onClick={() => window.scrollTo(0, 0)}>
+                <Link to="/services" onClick={() => {
+                    // Navigate first, then scroll to section after a short delay
+                    const element = document.getElementById("iv-therapy");
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}>
                   Learn More About IV Therapy
                 </Link>
               </Button>
             </div>
           </div>
 
-          {/* Essential Oils Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div className="space-y-6">
-              <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-                Essential Oils
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Our collection of therapeutic-grade essential oils are sourced
-                from the finest producers worldwide. Each oil is carefully
-                selected for its purity and potency to support your wellness
-                journey naturally.
-              </p>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• Stress Relief & Relaxation</li>
-                <li>• Sleep & Calm Support</li>
-                <li>• Focus & Mental Clarity</li>
-                <li>• Natural Immunity Boost</li>
-              </ul>
-              <Button
-                asChild
-                className="bg-wellness-warm hover:bg-wellness-warm/90 text-wellness-warm-foreground"
-              >
-                <Link to="/products" onClick={() => window.scrollTo(0, 0)}>
-                  Shop Essential Oils
-                </Link>
-              </Button>
-            </div>
-            <div className="space-y-6">
-              <img
-                src={essentialOilsImage}
-                alt="Essential Oils"
-                className="w-full aspect-square object-cover rounded-2xl shadow-lg"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
           {/* CAS Water Booster Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <img
-                src={CASBooster}
-                alt="CAS Water Booster"
-                className="w-full aspect-square object-cover rounded-2xl shadow-lg"
-                loading="lazy"
-              />
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
             <div className="space-y-6">
               <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary">
                 CAS Water Booster
@@ -261,7 +222,7 @@ const Home = () => {
                 className="bg-wellness-sage hover:bg-wellness-sage/90 text-primary-foreground"
               >
                 <Link
-                  to="/products"
+                  to="/products#cas-skincare"
                   onClick={() => {
                     // Navigate first, then scroll to section after a short delay
                     setTimeout(() => {
@@ -276,7 +237,61 @@ const Home = () => {
                 </Link>
               </Button>
             </div>
+            <div className="space-y-6">
+              <img
+                src={CASBooster}
+                alt="CAS Water Booster"
+                className="w-full aspect-square object-cover rounded-2xl shadow-lg"
+                loading="lazy"
+              />
+            </div>
           </div>
+
+          {/* Essential Oils Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <img
+                src={essentialOilsImage}
+                alt="Essential Oils"
+                className="w-full aspect-square object-cover rounded-2xl shadow-lg"
+                loading="lazy"
+              />
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary">
+                Essential Oils
+              </h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                Our collection of therapeutic-grade essential oils are sourced
+                from the finest producers worldwide. Each oil is carefully
+                selected for its purity and potency to support your wellness
+                journey naturally.
+              </p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Stress Relief & Relaxation</li>
+                <li>• Sleep & Calm Support</li>
+                <li>• Focus & Mental Clarity</li>
+                <li>• Natural Immunity Boost</li>
+              </ul>
+              <Button
+                asChild
+                className="bg-wellness-warm hover:bg-wellness-warm/90 text-wellness-warm-foreground"
+              >
+                <Link to="/products#essential-oils" onClick={() => {
+                    // Navigate first, then scroll to section after a short delay
+                    setTimeout(() => {
+                      const element = document.getElementById("essential-oils");
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }, 100);
+                  }}>
+                  Shop Essential Oils
+                </Link>
+              </Button>
+            </div>
+          </div>
+
         </div>
       </section>
 

@@ -79,6 +79,22 @@ const Footer = () => {
           <div className="md:col-span-1 md:ml-10">
             <h3 className="font-serif font-semibold mb-4">Products</h3>
             <ul className="space-y-2">
+            <li>
+                <button
+                  onClick={() => {
+                    navigate("/products");
+                    setTimeout(() => {
+                      const element = document.getElementById("cas-skincare");
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }, 100);
+                  }}
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-smooth text-sm text-left w-full"
+                >
+                  CAS Water Booster
+                </button>
+              </li>
               <li>
                 <button
                   onClick={() => {
@@ -93,22 +109,6 @@ const Footer = () => {
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-smooth text-sm text-left w-full"
                 >
                   Essential Oils
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    navigate("/products");
-                    setTimeout(() => {
-                      const element = document.getElementById("cas-skincare");
-                      if (element) {
-                        element.scrollIntoView({ behavior: "smooth" });
-                      }
-                    }, 100);
-                  }}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-smooth text-sm text-left w-full"
-                >
-                  CAS Water Booster
                 </button>
               </li>
             </ul>
