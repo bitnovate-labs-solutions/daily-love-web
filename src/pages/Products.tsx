@@ -27,7 +27,7 @@ import EO2Image from "@/assets/essential-oils/EO16.jpeg";
 import EO3Image from "@/assets/essential-oils/EO14.jpeg";
 // import EO5Image from "@/assets/essential-oils/EO5.jpeg";
 import EO7Image from "@/assets/essential-oils/EO7.jpeg";
-import casImage from "@/assets/CAS/CAS.png";
+import casImage from "@/assets/CAS/CAS1.jpg";
 import casVideo from "@/assets/CAS/water_booster.mp4";
 
 const Products = () => {
